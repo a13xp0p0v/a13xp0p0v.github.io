@@ -32,3 +32,6 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+
+kramdown:
+    smart_quotes: ["apos", "apos", "quot", "quot"]
