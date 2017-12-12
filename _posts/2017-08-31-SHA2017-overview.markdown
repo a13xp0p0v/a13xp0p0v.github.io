@@ -1,0 +1,106 @@
+---
+layout: post
+title:  "12 Great Technical Talks at SHA2017"
+date:   2017-08-31 13:37:00 +0300
+---
+
+<img src="https://habrastorage.org/web/363/23b/0a3/36323b0a3e964a9fae8c30783938dc4a.jpeg" alt="Photo by Arron Dowdeswell @Arronandir"/>
+<sub>[awesome photo by Arron Dowdeswell @Arronandir]</sub>
+
+[SHA2017][1] is a large outdoor hacker camp, which took place in the Netherlands on August 4th to 8th. Despite the intensive preparation of my own talk at this event, I have attended a lot of interesting lectures. In this article I'll share my impressions and list 12 great technical talks which I liked the most.
+
+<br>
+
+# How the NSA tracks you
+Bill Binney gave the keynote and described how NSA tracks us. On the one hand, the topic is no longer a sensation today. On the other hand, I would note that this man had a 34-year long career at NSA finally becoming the Technical Director of the organization. During his talk I was sitting in the front row and I was really impressed by the piercing gaze of the speaker.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/P1JDqNKMaus"></iframe>
+
+<br>
+
+# Mathematics and Video Games
+An entertaining and funny talk about the applications of graph theory and topology in the nice old games like Pacman and Space Invaders.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/uP001KVkpjE"></iframe>
+
+<br>
+
+# Automotive Microcontrollers. Safety != Security
+A very interesting lecture about hacking automotive systems using fault injection: voltage or electromagnetic glitches, laser shooting and other cool hacks. The researchers described why meeting the ISO 26262 standard requirements of functional safety does not help against low-level attacks.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/v6mjKFuCtLw"></iframe>
+
+<br>
+
+# DNA: The Code of Live
+An excellent lecture by Bert Hubert about DNA from the information technologies perspective. Not only is he a charismatic speaker, but also his talk was well prepared for the hacker conference. So the hour flew by and I found myself fascinated by the way God encoded life with DNA.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/EcGM_cNzQmE"></iframe>
+
+<br>
+
+# Improving Security with Fuzzing and Sanitizers
+A cool talk on a highly relevant topic from a very famous German security researcher - Hanno Böck. I gained some new ideas about fuzzing methods and used the opportunity to ask Hanno some questions about Sanitizers.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/npWY4hMTBhI"></iframe>
+
+<br>
+
+# Race for Root: Analysis of the Linux Kernel Race Condition Exploit
+A very good technical talk, let me recommend it ;) I described the CVE-2017-2636 vulnerability, which I found in the Linux kernel, explained my PoC exploit for it and showed the local privilege escalation demo.
+The [slides][2] and recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/g7Qm0NpPAz4"></iframe>
+
+<br>
+
+I would like to note that the Linux kernel maintainers have accepted my patch which blocks similar exploits. More technical details are [available][3] at the Positive Technologies blog.
+
+<br>
+
+# Flip Feng Shui
+One of the most notable talks of SHA2017. Victor van der Veen and Kaveh Razavi are renowned information security researchers. They have just won the prestigious PWNIE award for exploiting the Rowhammer hardware bug to attack cloud and mobile platforms. The speakers effectively explained their exploits and showed nice demos.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/-JXZbGj0kFc"></iframe>
+
+<br>
+
+# Computational Thinking
+An interesting and entertaining lecture by Pauline Maas, who shared her successful experience of involving little children and teenagers into programming, DIY and computational thinking in general. Yes, it is fun!
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/SMQIPR94SbY"></iframe>
+
+<br>
+
+# Bypassing Secure Boot using Fault Injection
+An impressive technical talk about fault injection attacks. The audience, myself included, was impressed by the live demo of bypassing Secure Boot checks on ARM using voltage glitches.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/s_PzQsWfhsU"></iframe>
+
+<br>
+
+# Rooting the MikroTik Routers
+A high quality technical talk with live demos of hacking the MikroTik industrial routers. At the end Kirils Solovjovs made his router beep a nice tune. The audience liked it.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/KZWGD9fWIcM"></iframe>
+
+<br>
+
+# Off Grid: Disclosing Your 0days in a Videogame Mod
+A really cool talk about a really cool hacking videogame called Off Grid. You play for a hacker breaking systems in a huge building of some corporation. The software on desktops, smartphones, IoT devices, which you hack, actually runs on virtual machines. So it's real fun :) Moreover, the game allows you to practice social engineering and other tricks. Off Grid developers showed some live demos of the gameplay, and the audience appreciated that a lot.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/Y_3L1RNt8Wg"></iframe>
+
+<br>
+
+# FaceDancer 2.0
+A very interesting lecture by the developers of FaceDancer 2.0. It is an improved technology for fuzzing various USB software stacks. In fact, the Linux kernel and other OS have the wrong security policy regarding trust to the hardware. In particular, USB software stacks usually imply the accurate behaviour of everything attached via USB. That wrong assumption makes "Bad USB" attacks so effective. FaceDancer 2.0 provides the reach capabilities of fuzzing USB hosts and making them more robust.
+The recording:
+<iframe width="700" height="400" src="https://www.youtube.com/embed/L3Ug9591Vag"></iframe>
+
+<br>
+
+## Eh, SHA2017 is over... But Still Hacking Anyway!
+
+[1]: https://sha2017.org/
+[2]: https://program.sha2017.org/system/event_attachments/attachments/000/000/111/original/a13xp0p0v_race_for_root_SHA2017.pdf
+[3]: http://blog.ptsecurity.com/2017/08/linux-block-double-free.html
