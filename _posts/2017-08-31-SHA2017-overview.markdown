@@ -53,7 +53,7 @@ The [slides][2] and recording:
 
 <br>
 
-I would like to note that the Linux kernel maintainers have accepted my patch which blocks similar exploits. More technical details are [available][3] at the Positive Technologies blog.
+I would like to note that the Linux kernel maintainers have accepted my patch which blocks similar exploits. More technical details are available in [a separate article][3].
 
 <br>
 
@@ -103,4 +103,4 @@ The recording:
 
 [1]: https://sha2017.org/
 [2]: https://program.sha2017.org/system/event_attachments/attachments/000/000/111/original/a13xp0p0v_race_for_root_SHA2017.pdf
-[3]: http://blog.ptsecurity.com/2017/08/linux-block-double-free.html
+[3]: https://a13xp0p0v.github.io/2017/09/03/naive-double-free-detection.html
