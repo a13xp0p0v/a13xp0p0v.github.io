@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "12 Great Technical Talks at SHA2017"
-date:   2017-08-31 13:37:00 +0300
+date:   2017-09-02 13:37:00 +0300
 ---
 
 <img src="https://habrastorage.org/web/363/23b/0a3/36323b0a3e964a9fae8c30783938dc4a.jpeg" alt="Photo by Arron Dowdeswell @Arronandir"/>
@@ -103,4 +103,4 @@ The recording:
 
 [1]: https://sha2017.org/
 [2]: https://program.sha2017.org/system/event_attachments/attachments/000/000/111/original/a13xp0p0v_race_for_root_SHA2017.pdf
-[3]: https://a13xp0p0v.github.io/2017/09/03/naive-double-free-detection.html
+[3]: https://a13xp0p0v.github.io/2017/09/27/naive-double-free-detection.html

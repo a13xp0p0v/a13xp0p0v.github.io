@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Blocking consecutive double-free in Linux kernel"
-date:   2017-09-03 13:37:00 +0300
+date:   2017-09-27 13:37:00 +0300
 ---
 
 On the 7-th of August I gave a talk at [SHA2017][1]. SHA stands for Still Hacking Anyway, it is a big outdoor hacker camp in Netherlands.

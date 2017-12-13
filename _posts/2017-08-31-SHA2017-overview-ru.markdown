@@ -52,7 +52,7 @@ date:   2017-08-31 13:37:42 +0300
 Запись выступления:
 <iframe width="700" height="400" src="https://www.youtube.com/embed/g7Qm0NpPAz4"></iframe>
 <br>
-Пользуясь случаем, сообщаю, что мой патч, блокирующий аналогичные эксплойты, принят в Linux kernel mainline. Технические детали <a href="https://a13xp0p0v.github.io/2017/09/03/naive-double-free-detection-ru.html">доступны в отдельной статье</a>.
+Пользуясь случаем, сообщаю, что мой патч, блокирующий аналогичные эксплойты, принят в Linux kernel mainline. Технические детали <a href="https://a13xp0p0v.github.io/2017/09/25/naive-double-free-detection-ru.html">доступны в отдельной статье</a>.
 
 <br>
 <h2>7. Flip Feng Shui</h2>
