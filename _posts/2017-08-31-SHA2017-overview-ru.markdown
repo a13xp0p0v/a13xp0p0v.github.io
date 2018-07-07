@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Обзор лучших технических докладов конференции Still Hacking Anyway 2017"
+title:  "[ru] Обзор лучших технических докладов конференции Still Hacking Anyway 2017"
 date:   2017-08-31 13:37:42 +0300
 ---
 
