@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "12 Great Technical Talks at SHA2017"
+title:  "12 great technical talks at SHA2017"
 date:   2017-09-02 13:37:00 +0300
 ---
 
