@@ -1,0 +1,423 @@
+---
+layout: post
+title: "How STACKLEAK improves Linux Kernel Security"
+date: 2018-11-04 13:37:00 +0300
+---
+
+STACKLEAK is a Linux kernel security feature initially developed by Grsecurity/PaX. I have
+introduced STACKLEAK into the Linux kernel mainline. This article describes
+the inner workings of this security feature and why the vanilla kernel needs it.<br />
+<br />
+In short, STACKLEAK is needed because it mitigates several types of Linux kernel
+vulnerabilities, by:<br />
+<ul style="text-align: left;">
+<li>&nbsp;Reducing the information that can be revealed to an attacker by kernel stack
+leak bugs,</li>
+<li>&nbsp;Blocking some uninitialized stack variable attacks,</li>
+<li>&nbsp;Detecting kernel stack overflow during Stack Clash attack against Linux Kernel.</li>
+</ul>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="/img/stackleak.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="341" data-original-width="1220" height="206"
+src="/img/stackleak.png"
+width="740" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 1. STACKLEAK security features</td></tr>
+</tbody></table><br />
+
+This security feature fits the mission of the Kernel Self Protection Project (KSPP):
+security is more than just fixing bugs. Fixing absolutely all bugs is impossible, which is
+why the Linux kernel has to fail safely in case of an error or vulnerability exploitation.
+More details about KSPP are <a
+href="http://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project">available on its
+wiki</a>.<br />
+<br />
+STACKLEAK was initially developed by the PaX Team, going as PAX_MEMORY_STACKLEAK in the
+Grsecurity/PaX patch. But this patch is no longer freely available to the Linux kernel
+community. So in May 2017 I took its last public version for the 4.9 kernel (April 2017) and got to
+work.<br />
+<br />
+The plan has been as follows:<br />
+<ul style="text-align: left;">
+<li>First extract STACKLEAK from the Grsecurity/PaX patch.</li>
+<li>Then carefully study the code and create a new patch.</li>
+<li>Send the result to the Linux kernel mailing list (LKML), get feedback, make
+improvements, and repeat until the code is accepted into the mainline.</li>
+</ul>
+As of November 2018, the 15th version of the STACKLEAK patch series
+<a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2d6bb6adb714b133db92ccd4bfc9c20f75f71f3f">
+has been merged</a> into the Linux kernel mainline v4.20. It contains the common code and
+x86_64/x86_32 support. The arm64 support developed by Laura Abbott from Red Hat has
+been merged into mainline kernel v4.19.<br />
+<!--more--><br />
+<br />
+<h2 style="text-align: left;">
+Security features</h2>
+<br />
+Most importantly, STACKLEAK erases the kernel stack at the end of syscalls. This reduces
+the information that can be revealed through some kernel stack leak bugs. An example of
+such an information leak is shown in Figure 2.<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://1.bp.blogspot.com/-pjhGF6S6z0M/W78_1Mc9JJI/AAAAAAAAHU0/WFPZcs9SrqMWjW1qzVC9CIb6dlFMZySvwCLcBGAs/s1600/st1.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="731" data-original-width="1004" height="464"
+src="https://1.bp.blogspot.com/-pjhGF6S6z0M/W78_1Mc9JJI/AAAAAAAAHU0/WFPZcs9SrqMWjW1qzVC9CIb6dlFMZySvwCLcBGAs/s640/st1.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 2. Kernel stack leak
+exploitation, pre-STACKLEAK</td></tr>
+</tbody></table>
+<br />
+However, these leaks become useless for the attacker if the used part of the kernel stack
+is filled by some fixed value at the end of a syscall (Figure 3).<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://4.bp.blogspot.com/-50Qc_ix9AK8/W78_7BMv7BI/AAAAAAAAHU4/1WbIA5j4pvk79y-qe4zcjFRSyvmH0DK9QCLcBGAs/s1600/st2.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="731" data-original-width="1004" height="464"
+src="https://4.bp.blogspot.com/-50Qc_ix9AK8/W78_7BMv7BI/AAAAAAAAHU4/1WbIA5j4pvk79y-qe4zcjFRSyvmH0DK9QCLcBGAs/s640/st2.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 3. Kernel stack leak
+exploitation, post-STACKLEAK</td></tr>
+</tbody></table>
+<br />
+Hence, STACKLEAK blocks exploitation of some uninitialized kernel stack variable
+vulnerabilities, such as CVE-2010-2963 and CVE-2017-17712. For a description of
+exploitation of vulnerability CVE-2010-2963, refer to the <a
+href="https://outflux.net/blog/archives/2010/10/19/cve-2010-2963-v4l-compat-exploit/">article
+by Kees Cook</a>.<br />
+<br />
+Figure 4 illustrates an attack on an uninitialized kernel stack variable.<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://1.bp.blogspot.com/-Ayy5Jzk9xDM/W79AC5a0zzI/AAAAAAAAHU8/jmtJ6LamjNE_g9rFjPfLrPnGtBQ8p8DWACLcBGAs/s1600/st3.png"
+imageanchor="1" style="margin-left: 50px; margin-right: auto;"><img border="0"
+data-original-height="696" data-original-width="1004" height="442"
+src="https://1.bp.blogspot.com/-Ayy5Jzk9xDM/W79AC5a0zzI/AAAAAAAAHU8/jmtJ6LamjNE_g9rFjPfLrPnGtBQ8p8DWACLcBGAs/s640/st3.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 4. Uninitialized kernel
+stack variable exploitation, pre-STACKLEAK</td></tr>
+</tbody></table><br />
+STACKLEAK mitigates this type of attack because at the end of a syscall, it fills the
+kernel stack with a value that points to an unused hole in the virtual memory map (Figure
+5).<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://1.bp.blogspot.com/-j7a24-6bRgY/W79AI1hCFzI/AAAAAAAAHVE/deiIGFkyqggQ4B0aoNu_-Z1NzahaouzaQCLcBGAs/s1600/st4.png"
+imageanchor="1" style="margin-left: 50px; margin-right: auto;"><img border="0"
+data-original-height="696" data-original-width="1004" height="442"
+src="https://1.bp.blogspot.com/-j7a24-6bRgY/W79AI1hCFzI/AAAAAAAAHVE/deiIGFkyqggQ4B0aoNu_-Z1NzahaouzaQCLcBGAs/s640/st4.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 5. Uninitialized kernel
+stack variable exploitation, post-STACKLEAK</td></tr>
+</tbody></table>
+<br />
+There is an important limitation: STACKLEAK does not help against similar attacks
+performed during a single syscall.<br />
+<br />
+<h2 style="text-align: left;">
+Runtime detection of kernel stack depth overflow</h2>
+<br />
+In the mainline kernel, STACKLEAK would be effective against kernel stack depth overflow
+only in combination with CONFIG_THREAD_INFO_IN_TASK and CONFIG_VMAP_STACK (both introduced
+by Andy Lutomirski).<br />
+<br />
+The simplest type of stack depth overflow exploit is shown in Figure 6.<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://1.bp.blogspot.com/-CcFE7ACvGeQ/W79ARkrx8zI/AAAAAAAAHVI/3G_qJWS6EpIvG-TFDPntfYtWBdepzll7ACLcBGAs/s1600/st5.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="613" data-original-width="1004" height="390"
+src="https://1.bp.blogspot.com/-CcFE7ACvGeQ/W79ARkrx8zI/AAAAAAAAHVI/3G_qJWS6EpIvG-TFDPntfYtWBdepzll7ACLcBGAs/s640/st5.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 6. Stack depth overflow
+exploitation: mitigation with CONFIG_THREAD_INFO_IN_TASK</td></tr>
+</tbody></table><br />
+Overwriting the thread_info structure at the bottom of the kernel stack allows an attacker
+to escalate privileges on the system. However, CONFIG_THREAD_INFO_IN_TASK moves
+thread_info out of the thread stack and therefore mitigates such an attack.<br />
+<br />
+There is a more complex variant of the attack: make the kernel stack grow beyond&nbsp; the
+end of the kernel's preallocated stack space and overwrite security-sensitive data in a
+neighboring memory region (Figure 7). More technical details are available in:<br />
+<br />
+<ul style="text-align: left;">
+<li>"<a href="https://jon.oberheide.org/files/infiltrate12-thestackisback.pdf">The Stack
+is Back</a>" by Jon Oberheide</li>
+<li>"<a
+href="https://googleprojectzero.blogspot.ru/2016/06/exploiting-recursion-in-linux-kernel_20.html">Exploiting
+Recursion in the Linux Kernel</a>" by Jann Horn</li>
+</ul>
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://2.bp.blogspot.com/-KTlyZEl66cg/W79AjlZ4_FI/AAAAAAAAHVY/QDjuutIT-QkrRe0Dgj1r9byBy_32FrbmwCLcBGAs/s1600/st6.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="855" data-original-width="1004" height="544"
+src="https://2.bp.blogspot.com/-KTlyZEl66cg/W79AjlZ4_FI/AAAAAAAAHVY/QDjuutIT-QkrRe0Dgj1r9byBy_32FrbmwCLcBGAs/s640/st6.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><br />Figure 7. Stack depth overflow
+exploitation: a more complicated version</td></tr>
+</tbody></table>
+<br />
+CONFIG_VMAP_STACK protects against such attacks by placing a special guard page next to
+the kernel stack (Figure 8). If accessed, the guard page triggers an exception.<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://4.bp.blogspot.com/-qJBOD_wze58/W79Asv4idkI/AAAAAAAAHVc/buEhcxn2U5ks5ngtM992Ak8zRlKFpQnFwCLcBGAs/s1600/st7.png"
+imageanchor="1" style="margin-left: auto; margin-right: 140px;"><img border="0"
+data-original-height="1196" data-original-width="1004" height="640"
+src="https://4.bp.blogspot.com/-qJBOD_wze58/W79Asv4idkI/AAAAAAAAHVc/buEhcxn2U5ks5ngtM992Ak8zRlKFpQnFwCLcBGAs/s640/st7.png"
+width="536" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><br />Figure 8. Stack depth overflow
+exploitation: mitigation with guard pages</td></tr>
+</tbody></table><br />
+Finally, the most interesting version of a stack depth overflow attack is a Stack Clash
+(Figure 9). Gael Delalleau <a
+href="https://cansecwest.com/core05/memory_vulns_delalleau.pdf">published</a> this idea in
+2005. It was later <a
+href="https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt">revisited</a> by the
+Qualys Research Team in 2017. In essence, it is possible to jump over a guard page and
+overwrite data from a neighboring memory region using Variable Length Arrays (VLA).<br />
+<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://3.bp.blogspot.com/-w6zNT5huxSY/W79A39OCj4I/AAAAAAAAHVk/B9u1ty4NMO854UxRE4xUibWrZsCc1lr2QCLcBGAs/s1600/st8.png"
+imageanchor="1" style="margin-left: auto; margin-right: 50px;"><img border="0"
+data-original-height="942" data-original-width="1004" height="598"
+src="https://3.bp.blogspot.com/-w6zNT5huxSY/W79A39OCj4I/AAAAAAAAHVk/B9u1ty4NMO854UxRE4xUibWrZsCc1lr2QCLcBGAs/s640/st8.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;"><br />Figure 9. Stack Clash attack</td></tr>
+</tbody></table><br />
+STACKLEAK mitigates Stack Clash attacks against the kernel stack. More information about
+STACKLEAK and Stack Clash is <a
+href="https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php">available</a> on
+the grsecurity blog.<br />
+<br />
+To prevent a Stack Clash in the kernel stack, a stack depth overflow check is performed
+before each alloca() call. This is the code from v14 of the patch series:<br />
+<br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">void __used stackleak_check_alloca(unsigned long size)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">{</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;unsigned long sp = (unsigned
+long)&amp;sp;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;struct stack_info stack_info =
+{0};</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;unsigned long visit_mask = 0;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;unsigned long stack_left;</span><br />
+<span style="font-size: x-small;"><span style="font-family: &quot;courier new&quot; ,
+&quot;courier&quot; , monospace;"><br /></span>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp;BUG_ON(get_stack_info(&amp;sp, current,
+&amp;stack_info, &amp;visit_mask));</span></span><br />
+<span style="font-size: x-small;"><span style="font-family: &quot;courier new&quot; ,
+&quot;courier&quot; , monospace;"><br /></span>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp;stack_left = sp - (unsigned
+long)stack_info.begin;</span></span><br />
+<span style="font-size: x-small;"><span style="font-family: &quot;courier new&quot; ,
+&quot;courier&quot; , monospace;"><br /></span>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp;if (size &gt;= stack_left) {</span></span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/*</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * Kernel
+stack depth overflow is detected, let's report that.</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * If
+CONFIG_VMAP_STACK is enabled, we can safely use BUG().</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * If
+CONFIG_VMAP_STACK is disabled, BUG() handling can corrupt</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * the
+neighbour memory. CONFIG_SCHED_STACK_END_CHECK calls</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * panic() in
+a similar situation, so let's do the same if that</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * option is
+on. Otherwise just use BUG() and hope for the best.</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">#if !defined(CONFIG_VMAP_STACK) &amp;&amp;
+defined(CONFIG_SCHED_STACK_END_CHECK)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;panic("alloca() over the kernel stack boundary\n");</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">#else</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;BUG();</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">#endif</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;}</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">}</span><br />
+<br />
+However, this functionality was excluded from the 15th version of the STACKLEAK patch
+series. The main reason is that Linus Torvalds has <a
+href="https://lore.kernel.org/lkml/CA+55aFy6jNLsywVYdGp83AMrXBo_P-pkjkphPGrO=82SPKCpLQ@mail.gmail.com/">forbidden</a>
+use of BUG_ON() in kernel hardening patches. Moreover, during discussion of the 9th
+version, the maintainers decided to remove all VLAs from the mainline kernel. 15
+kernel developers participated in that work, which <a href=https://lkml.org/lkml/2018/10/28/189>
+has been finished</a> in kernel v4.20.<br />
+<br />
+<h2 style="text-align: left;">
+Performance impact</h2>
+<br />
+Cursory performance testing was performed on x86_64 hardware: Intel Core i7-4770, 16 GB
+RAM.<br />
+<br />
+Test 1, looking good: compiling the Linux kernel on one CPU core.<br />
+<br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; # time make</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Result on 4.18:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; real 12m14.124s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; user 11m17.565s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; sys 1m6.943s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Result on 4 .18+stackleak:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; real 12m20.335s (+0.85%)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; user 11m23.283s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; sys 1m8.221s</span><br />
+<br />
+Test 2, not so nice:<br />
+<br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; # hackbench -s 4096 -l 2000 -g 15 -f 25 –P</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Average on 4.18: 9.08 s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Average on 4.18+stackleak: 9.47 s (+4.3%)</span><br />
+<br />
+In summary: the performance penalty varies for different workloads. Test STACKLEAK on your
+expected workload before deploying it in production.<br />
+<br />
+<h2 style="text-align: left;">
+Inner workings</h2>
+<br />
+STACKLEAK consists of:<br />
+<ul style="text-align: left;">
+<li>The code that erases the kernel stack at the end of syscalls,</li>
+<li>The GCC plugin for kernel compile-time instrumentation.</li>
+</ul>
+Erasing the kernel stack is performed in the stackleak_erase() function. This function
+runs before returning from a syscall to userspace and writes STACKLEAK_POISON (-0xBEEF) to
+the used part of the thread stack (Figure 11). For speed, stackleak_erase() uses the
+lowest_stack variable as a starting point (Figure 10). This variable is regularly updated
+in stackleak_track_stack() during system calls.<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://4.bp.blogspot.com/-hdoLI8n4n0E/W79BZSYJ6DI/AAAAAAAAHVw/vCiNp4fc7hgK3sptIG1BpBFTbq5Sj6dywCLcBGAs/s1600/st9.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="826" data-original-width="1004" height="526"
+src="https://4.bp.blogspot.com/-hdoLI8n4n0E/W79BZSYJ6DI/AAAAAAAAHVw/vCiNp4fc7hgK3sptIG1BpBFTbq5Sj6dywCLcBGAs/s640/st9.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 10. Erasing the kernel stack
+with stackleak_erase()</td></tr>
+</tbody></table><br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="https://2.bp.blogspot.com/-cwyUeksepkc/W79BfPpUCHI/AAAAAAAAHV0/DwTDayGFbmoDV6ZxnBp6JFNu9D8f2VSDgCLcBGAs/s1600/st10.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="826" data-original-width="1004" height="526"
+src="https://2.bp.blogspot.com/-cwyUeksepkc/W79BfPpUCHI/AAAAAAAAHV0/DwTDayGFbmoDV6ZxnBp6JFNu9D8f2VSDgCLcBGAs/s640/st10.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 11. Erasing the kernel stack
+with stackleak_erase(), continued</td></tr>
+</tbody></table><br />
+Kernel compile-time instrumentation is handled by the STACKLEAK GCC plugin. GCC plugins
+are compiler-loadable modules that can be project-specific. They register new compilation
+passes via the GCC Pass Manager and provide the callbacks for these passes.<br />
+<br />
+So the STACKLEAK GCC plugin inserts the aforementioned stackleak_track_stack() calls for
+the functions with a large stack frame. It also inserts the stackleak_check_alloca() call
+before alloca and the stackleak_track_stack() call after it.<br />
+<br />
+As I already mentioned, inserting stackleak_check_alloca() was dropped in the 15th version
+of the STACKLEAK patch series.<br />
+<br />
+<h2 style="text-align: left;">
+The way to the mainline</h2>
+<br />
+The path of STACKLEAK to the Linux kernel mainline was very long and complicated (Figure
+12).<br />
+<br />
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container"
+style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a
+href="/img/stackleak_timeline.png"
+imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0"
+data-original-height="442" data-original-width="1004" height="280"
+src="/img/stackleak_timeline.png"
+width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">Figure 12. The way to the
+mainline</td></tr>
+</tbody></table><br />
+In April 2017, the authors of grsecurity made their patches commercial. In May 2017, I
+decided to work on upstreaming STACKLEAK. It was the beginning of a very long story. My
+employer Positive Technologies allowed me to spend a part of my working time on this task,
+although I mainly spent my free time on it.<br />
+<br />
+As of November 2018, the 15th version of the STACKLEAK patch series is merged into the
+Linux kernel mainline v4.20.<br />
+<br />
+I gave a&nbsp;<a
+href="https://lssna18.sched.com/event/FLYJ/stackleak-a-long-way-to-the-linux-kernel-mainline-alexander-popov-positive-technologies">talk</a>&nbsp;on
+STACKLEAK at the Linux Security Summit NA 2018.&nbsp;<a
+href="https://schd.ws/hosted_files/lssna18/b7/stackleak_LSS_NA_2018.pdf">Slides</a>&nbsp;and&nbsp;<a
+href="https://www.youtube.com/watch?v=5wIniiWSgUc">video</a>&nbsp;is already available.<br />
+<br />
+<iframe allowfullscreen="" frameborder="0" height="270"
+src="https://www.youtube.com/embed/5wIniiWSgUc" width="480"></iframe>
+
+<br />
+<h2 style="text-align: left;">
+Conclusion</h2>
+<br />
+STACKLEAK is a very useful Linux kernel self-protection feature that mitigates several
+types of vulnerabilities. Moreover, the PaX Team has made it rather fast and technically
+beautiful. Considering the substantial work done in this direction, upstreaming STACKLEAK
+was good for Linux users with high information security requirements and also focused the
+attention of the Linux developer community on kernel self-protection.<br />
+<br />
