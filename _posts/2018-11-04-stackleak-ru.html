@@ -1,0 +1,313 @@
+---
+layout: post
+title: "[ru] Как STACKLEAK улучшает безопасность ядра Linux"
+date: 2018-11-05 13:37:00 +0300
+---
+
+STACKLEAK - это функция безопасности ядра Linux, изначально разработанная создателями Grsecurity/PaX. Я довел STACKLEAK до официального ванильного ядра (Linux kernel mainline). В этой статье будет рассказано о внутреннем устройстве, свойствах данной функции безопасности и ее очень долгом непростом пути в mainline.
+<br /><br />
+
+STACKLEAK защищает от нескольких классов уязвимостей в ядре Linux, а именно:
+
+<ul>
+	<li>сокращает полезную для атакующего информацию, которую могут выдать утечки из ядерного стека в пользовательское пространство;</li>
+	<li>блокирует некоторые атаки на неинициализированные переменные в стеке ядра;</li>
+	<li>предоставляет средства динамического обнаружения переполнения ядерного стека.</li>
+</ul>
+<br /><br />
+
+<img src="/img/stackleak.png" />
+
+<br /><i>Схема 0. Свойства безопасности STACKLEAK</i>
+<br /><br />
+
+Данная функция безопасности отлично укладывается в концепцию проекта Kernel Self Protection Project (KSPP): безопасность - это больше, чем только исправление ошибок. Абсолютно все ошибки в коде исправить невозможно, и поэтому ядро Linux должно безопасно отрабатывать в ошибочных ситуациях, в том числе при попытках эксплуатации уязвимостей. Больше подробностей о KSPP <a href="http://kernsec.org/wiki/index.php/Kernel_Self_Protection_Project">доступно на wiki проекта</a>.
+<br /><br />
+
+STACKLEAK присутствует как PAX_MEMORY_STACKLEAK в grsecurity/PaX патче. Однако grsecurity/PaX патч перестал распространяться свободно с апреля 2017 года. Поэтому появление STACKLEAK в ванильном ядре ценно для пользователей Linux с повышенными требованиями к информационной безопасности.
+<br /><br />
+
+Порядок работы:
+
+<ul>
+	<li>выделить STACKLEAK из grsecurity/PaX патча,</li>
+	<li>тщательно изучить код и сформировать патч,</li>
+	<li>отправить в LKML, получить обратную связь, улучшить, повторять заново до принятия в mainline.</li>
+</ul>
+1 ноября 2018 года 15-я версия серии патчей <a href=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2d6bb6adb714b133db92ccd4bfc9c20f75f71f3f>была принята</a> в ядро Linux 4.20. STACKLEAK работает на x86_64, x86_32 и arm64. Поддержка для arm64 была разработана Лорой Эббот (Laura Abbott) из Red Hat.
+<br /><br />
+
+<h2>STACKLEAK: свойства безопасности</h2>
+<h3>Очистка остаточной информации в стеке ядра</h3>
+Данная мера сокращает полезную информацию, которую могут выдать некоторые утечки из ядерного стека в пользовательское пространство.
+<br /><br />
+
+Пример утечки информации из стека ядра представлен на схеме 1.
+<br /><br />
+
+<img src="https://habrastorage.org/webt/kt/d2/6v/ktd26vqpdxlk4vk8lobb7ixrybc.png" />
+
+<br /><i>Схема 1.</i>
+<br /><br />
+
+Однако утечки такого типа становятся бесполезны, если в конце системного вызова использованная часть стека ядра заполняется фиксированным значением (схема 2).
+<br /><br />
+
+<img src="https://habrastorage.org/webt/fy/rr/w4/fyrrw4y-hyyms3pqjlumc_4k01w.png" />
+
+<br /><i>Схема 2.</i>
+<br /><br />
+
+Как следствие, STACKLEAK блокирует некоторые атаки на неинициализированные переменные в стеке ядра. Примеры таких уязвимостей: CVE-2017-17712, CVE-2010-2963. Описание методики эксплуатации уязвимости CVE-2010-2963 можем найти <a href="https://outflux.net/blog/archives/2010/10/19/cve-2010-2963-v4l-compat-exploit/">в статье Кейса Кука</a> (Kees Cook).
+<br /><br />
+
+Суть атаки на неинициализированную переменную в стеке ядра представлена на схеме 3.
+<br /><br />
+
+<img src="https://habrastorage.org/webt/8j/0p/po/8j0pposbamjhyq2jlsmuxpoqhfq.png" />
+
+<br /><i>Схема 3.</i>
+<br /><br />
+
+STACKLEAK блокирует атаки такого типа, так как значение, которым заполняется ядерный стек в конце системного вызова, указывает на неиспользованную область в виртуальном адресном пространстве (схема 4).
+<br /><br />
+
+<img src="https://habrastorage.org/webt/-t/zp/ok/-tzpokwwsamgqqe0ij7tafszzps.png" />
+
+<br /><i>Схема 4.</i>
+<br /><br />
+
+При этом важным ограничением является то, что STACKLEAK не защищает от аналогичных атак, выполняемых за один системный вызов.
+<br /><br />
+
+<h3>Обнаружение переполнения стека ядра «в глубину»</h3>
+В ванильном ядре (Linux kernel mainline) STACKLEAK эффективен против переполнения стека «в глубину» (kernel stack depth overflow) только в сочетании с CONFIG_THREAD_INFO_IN_TASK и CONFIG_VMAP_STACK. Обе эти меры внедрены Энди Лутомирски (Andy Lutomirski).
+<br /><br />
+
+Простейший вариант эксплуатации данного типа уязвимостей отражен на схеме 5.
+<br /><br />
+
+<img src="https://habrastorage.org/webt/1a/vd/ft/1avdft3jdwd9utgtpletdnv_nuu.png" />
+
+<br /><i>Схема 5.</i>
+<br /><br />
+
+Перезапись определенных полей в структуре thread_info на дне ядерного стека позволяет повысить привилегии процесса. Однако при включении опции CONFIG_THREAD_INFO_IN_TASK данная структура выносится из ядерного стека, что устраняет описанный способ эксплуатации уязвимости.
+<br /><br />
+
+Более продвинутый вариант данной атаки состоит в том, чтобы с помощью выхода за границу стека переписать данные в соседнем регионе памяти. Подробнее о данном подходе:
+<br /><br />
+
+<ul>
+	<li>в презентации "<a href="https://jon.oberheide.org/files/infiltrate12-thestackisback.pdf">The Stack is Back</a>" Джона Оберхайда (Jon Oberheide),</li>
+	<li>в статье "<a href="https://googleprojectzero.blogspot.ru/2016/06/exploiting-recursion-in-linux-kernel_20.html">Exploiting Recursion in the Linux Kernel</a>" Яна Хорна (Jann Horn). </li>
+</ul>
+Атака такого типа отражена на схеме 6.
+<br /><br />
+
+<img src="https://habrastorage.org/webt/un/zy/3s/unzy3s_w29yrpp020kyj8bokvtw.png" />
+
+<br /><i>Схема 6.</i>
+<br /><br />
+
+Защитой в данном случае служит CONFIG_VMAP_STACK. При включении данной опции рядом с ядерным стеком помещается специальная страница памяти (guard page), доступ к которой приводит к исключению (схема 7).
+<br /><br />
+
+<img src="https://habrastorage.org/webt/9w/4b/ht/9w4bht4brf9z7zu6t8udygbr48q.png" />
+
+<br /><i>Схема 7.</i>
+<br /><br />
+
+Наконец, самым интересным вариантом переполнения стека в глубину является атака типа Stack Clash. Идею еще в 2005 году <a href="https://cansecwest.com/core05/memory_vulns_delalleau.pdf">выдвинул</a> Гаэль Дэлалю (Gael Delalleau).
+<br /><br />
+
+В 2017 году ее переосмыслили исследователи из компании Qualys, <a href="https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt">назвав</a> данную технику Stack Clash. Дело в том, что существует способ перепрыгнуть guard page и перезаписать данные из соседнего региона памяти (схема 8). Это делается с помощью массива переменной длинны (VLA, variable length array), размер которого контролирует атакующий.
+<br /><br />
+
+<img src="https://habrastorage.org/webt/vs/si/z2/vssiz2shuuuswmz96rmjongjjbs.png" />
+
+<br /><i>Схема 8.</i>
+<br /><br />
+
+Больше информации о STACKLEAK и Stack Clash содержится в <a href="https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php">блоге grsecurity</a>.
+<br /><br />
+
+Как STACKLEAK защищает от Stack Clash в ядерном стеке? Перед каждым вызовом alloca() выполняется проверка на переполнение стека в глубину. Вот соответствующий код из 14 версии серии патчей:
+<br /><br />
+
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">void __used stackleak_check_alloca(unsigned long size)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">{</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;unsigned long sp = (unsigned
+long)&amp;sp;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;struct stack_info stack_info =
+{0};</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;unsigned long visit_mask = 0;</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;unsigned long stack_left;</span><br />
+<span style="font-size: x-small;"><span style="font-family: &quot;courier new&quot; ,
+&quot;courier&quot; , monospace;"><br /></span>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp;BUG_ON(get_stack_info(&amp;sp, current,
+&amp;stack_info, &amp;visit_mask));</span></span><br />
+<span style="font-size: x-small;"><span style="font-family: &quot;courier new&quot; ,
+&quot;courier&quot; , monospace;"><br /></span>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp;stack_left = sp - (unsigned
+long)stack_info.begin;</span></span><br />
+<span style="font-size: x-small;"><span style="font-family: &quot;courier new&quot; ,
+&quot;courier&quot; , monospace;"><br /></span>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp;if (size &gt;= stack_left) {</span></span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;/*</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * Kernel
+stack depth overflow is detected, let's report that.</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * If
+CONFIG_VMAP_STACK is enabled, we can safely use BUG().</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * If
+CONFIG_VMAP_STACK is disabled, BUG() handling can corrupt</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * the
+neighbour memory. CONFIG_SCHED_STACK_END_CHECK calls</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * panic() in
+a similar situation, so let's do the same if that</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; * option is
+on. Otherwise just use BUG() and hope for the best.</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">#if !defined(CONFIG_VMAP_STACK) &amp;&amp;
+defined(CONFIG_SCHED_STACK_END_CHECK)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;panic("alloca() over the kernel stack boundary\n");</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">#else</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;BUG();</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">#endif</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">&nbsp; &nbsp; &nbsp; &nbsp;}</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;
+font-size: x-small;">}</span><br />
+<br />
+
+Однако данный функционал был исключен из 15 версии. Это было сделано в первую очередь из-за спорного <a href="https://lore.kernel.org/lkml/CA+55aFy6jNLsywVYdGp83AMrXBo_P-pkjkphPGrO=82SPKCpLQ@mail.gmail.com/">запрета</a> Линуса Торвальдса использовать BUG_ON() в патчах по безопасности ядра Linux.
+<br /><br />
+
+Кроме того, 9-я версия серии патчей привела к дискуссии, в результате которой было решено устранить все массивы переменной длинны из mainline-ядра.
+<br /><br />
+
+<h2>Влияние STACKLEAK на производительность</h2>
+Привожу результаты тестирования производительности на x86_64. Оборудование: Intel Core i7-4770, 16 GB RAM.
+<br /><br />
+
+Тест №1, привлекательный: сборка ядра Linux на одном процессорном ядре
+<br /><br />
+
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; # time make</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Result on 4.18:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; real 12m14.124s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; user 11m17.565s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; sys 1m6.943s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Result on 4 .18+stackleak:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; real 12m20.335s (+0.85%)</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; user 11m23.283s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; &nbsp; &nbsp; sys 1m8.221s</span><br />
+<br />
+
+Тест №2, непривлекательный:
+<br /><br />
+
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; # hackbench -s 4096 -l 2000 -g 15 -f 25 –P</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Average on 4.18: 9.08 s</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; ,
+monospace;">&nbsp; &nbsp; Average on 4.18+stackleak: 9.47 s (+4.3%)</span><br />
+<br />
+
+Таким образом влияние STACKLEAK на производительность системы зависит от типа нагрузки. В частности, большое количество коротких системных вызовов повышает накладные расходы. Т.о. необходимо оценивать производительность STACKLEAK для планируемой нагрузки перед промышленной эксплуатацией.
+<br /><br />
+
+<h2>Внутреннее устройство STACKLEAK</h2>
+STACKLEAK состоит из:
+<br /><br />
+
+<ul>
+	<li>Кода, очищающего стек ядра в конце системного вызова (изначально был написан на ассемблере),</li>
+	<li>GCC плагина для инструментации кода ядра на этапе компиляции.</li>
+</ul>
+Очистка стека ядра выполняется в функции stackleak_erase(). Данная функция отрабатывает перед возвращением в пользовательское пространство после системного вызова. В использованную часть стека thread’а записывается STACKLEAK_POISON (-0xBEEF). На начальную точку очистки указывает переменная lowest_stack, постоянно обновляемая в stackleak_track_stack().
+<br /><br />
+
+Стадии работы stackleak_erase() отражены на схемах 9 и 10.
+<br /><br />
+
+<img src="https://habrastorage.org/webt/o0/qu/ar/o0quaropj1l3lcpm_wkucohbrwq.png" />
+
+<br /><i>Схема 9.</i>
+<br /><br />
+
+<img src="https://habrastorage.org/webt/vb/qg/2v/vbqg2vqqzsqrstwaqew21svaids.png" />
+
+<br /><i>Схема 10.</i>
+<br /><br />
+
+Т.о. stackleak_erase() очищает только использованную часть ядерного стека. Именно поэтому STACKLEAK такой быстрый. А если на x86_64 очищать все 16 кБ стека ядра в конце каждого системного вызова, hackbench показывает падение производительности 40%.
+<br /><br />
+
+Инструментация кода ядра на этапе компиляции выполняется в STACKLEAK GCC плагине.
+<br /><br />
+
+GCC плагины - это загружаемые модули для компилятора GCC, специфичные для проекта. Они регистрируют новые проходы с помощью GCC Pass Manager, предоставляя обратные вызовы (callbacks) для данных проходов.
+<br /><br />
+
+Итак, для полноценной работы STACKLEAK в код функций с большим стековым кадром (stack frame) вставляются вызовы stackleak_track_stack(). Также перед каждой alloca() вставляется вызов уже упомянутой stackleak_check_alloca(), а после — вызов stackleak_track_stack().
+<br /><br />
+
+Как уже было сказано, в 15 версии серии патчей из GCC-плагина была исключена вставка вызовов stackleak_check_alloca().
+<br /><br />
+
+<h2>Путь в Linux kernel mainline</h2>
+Путь STACKLEAK в mainline очень долгий и непростой (схема 11).
+<br /><br />
+
+<img src="/img/stackleak_timeline.png" />
+
+<br /><br />
+<br /><i>Схема 11. Ход работ по внедрению STACKLEAK в Linux kernel mainline.</i>
+<br /><br />
+
+В апреле 2017 года создатели grsecurity закрыли свои патчи для сообщества, начав распространять их только на коммерческой основе. В мае 2017 года я взялся за задачу внедрения STACKLEAK в ванильное ядро. Так начался путь длиной более года. Компания Positive Technologies, в которой я работаю, давала мне возможность заниматься этой задачей некоторую часть моего рабочего времени. Но в основном я тратил на нее свободное время.
+<br /><br />
+
+С прошлого мая моя серия патчей прошла многократное ревью, претерпела значительные изменения, дважды была раскритикована Линусом Торвальдсом. Мне хотелось оставить всю эту затею уже много раз. Но в определенный момент появилось твердое желание все же дойти до конца. 1 ноября 2018 года 15-я версия серии патчей <a href=https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2d6bb6adb714b133db92ccd4bfc9c20f75f71f3f>была принята</a> в ядро Linux 4.20.
+<br /><br />
+
+Месяц назад я сделал доклад о данной работе на Linux Security Summit. Привожу ссылки на <a href="https://schd.ws/hosted_files/lssna18/b7/stackleak_LSS_NA_2018.pdf">слайды</a> и <a href="https://www.youtube.com/watch?v=5wIniiWSgUc">видео</a>.
+<br /><br />
+
+<h2>Заключение</h2>
+STACKLEAK - полезная функция безопасности ядра Linux, блокирующая эксплуатацию сразу несколько типов уязвимостей. Помимо этого изначальный автор PaX Team смог сделать ее быстрой и красивой в инженерном плане. Появление STACKLEAK в ванильном ядре ценно для пользователей Linux с повышенными требованиями к информационной безопасности. Более того, работа в данном направлении привлекла внимание сообщества разработчиков Linux к средствам самозащиты ядра.
