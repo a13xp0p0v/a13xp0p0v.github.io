@@ -1,0 +1,83 @@
+---
+layout: post
+title: "[ru] Подборка докладов по ядру Linux с Open Source Summit Europe 2018"
+date: 2018-11-07 13:37:00 +0300
+---
+
+<img src="https://habrastorage.org/webt/0g/ya/j8/0gyaj8wqvadv98xxes26q2ylzq8.jpeg" />
+
+<br />
+<br />
+На прошлой неделе в Эдинбурге (Шотландия) прошел европейский <a href="https://events.linuxfoundation.org/events/open-source-summit-europe-2018/">Open Source Summit 2018</a>. Представляю вашему вниманию подборку интересных докладов по ядру Linux, на которых мне удалось поприсутствовать.
+
+<br />
+<br />
+1. Из ключевых выступлений (keynotes) хочется выделить "The Kernel Report" Джонатана Корбета (Jonathan Corbet). Он обозначил основные тенденции развития ядра Linux за последнее время. Отдельно он остановился на устранении нашумевших уязвимостей Spectre и Meltdown. Мне показались интересными его размышления о том, как eBPF размывает границы между пользовательским и ядерным пространством.
+
+<br /><iframe allowfullscreen="" frameborder="0" height="375" src="https://www.youtube.com/embed/XQGUi5Gu0D8" width="750"></iframe>
+
+<br />
+<br />
+2. Специалисты из OTH Regensburg и Siemens развили тему Spectre and Meltdown применительно к задачам реального времени (real-time). Они рассказали о том, как устранение данных уязвимостей повлияло на производительность ядра Linux с Preempt-RT патчем и на быстродействие гипервизора Jailhouse.
+
+<br /><iframe allowfullscreen="" frameborder="0" height="375" src="https://www.youtube.com/embed/nqU4j2M_Ul4" width="750"></iframe>
+
+<br />
+<br />
+3. Кристоф Ламетер (Christoph Lameter) выступил с отличным введением в управление памяти ядра Linux. Он рассказал об организации физической и виртуальной памяти процесса, о том, как детально отследить их состояние из пользовательского пространства. Короче говоря, отлично разложил все по полочкам. А как еще может выступить мэйнтейнер ядерного аллокатора? Слайды:
+
+<br /><a href="https://events.linuxfoundation.org/wp-content/uploads/2017/12/MM-101-Introduction-to-Linux-Memory-Management-Christoph-Lameter-Jump-Trading-LLC.pdf"><img src="https://habrastorage.org/webt/de/5p/1n/de5p1nswmqmxd3rvexsi70zp6dq.png" /></a>
+
+<br />
+<br />
+4. Позвольте также рассказать о моем докладе об уроках участия в Kernel Self Protection Project. Целью доклада было вовлечь больше энтузиастов в безопасность ядра Linux и поделиться моим опытом разработки средств защиты ядра. Я рассказал о расстановке сил в security-сообществе и о <a href="https://github.com/a13xp0p0v/linux-kernel-defence-map">карте средств самозащиты ядра</a>. Затем -- о блокировке двойного освобождения памяти в ядре Linux и работах по внедрению PAX_MEMORY_STACKLEAK в ванильное ядро. После доклада последовало полезное общение и обмен идеями. Слайды:
+
+<br /><a href="https://events.linuxfoundation.org/wp-content/uploads/2017/12/Between-the-Millstones-Lessons-of-Self-Funded-Participation-in-Kernel-Self-Protection-Project-Alexander-Popov-Positive-Technologies.pdf"><img src="https://habrastorage.org/webt/cb/ca/im/cbcaimnuiecrv0fpo84zthwbtxm.png" /></a>
+
+<br />
+<br />
+5. Даррен Харт (Darren Hart) рассказал о наведении порядка в Kconfig ядра Linux с помощью фрагментов конфигурации. Ядро имеет более 10000 различных опций, они сложным образом зависят друг от друга, поэтому очень неудобно отслеживать изменения конфигурации ядра с помощью системы контроля версий. Для того, чтобы облегчить задачу управления конфигурациями, из проекта Yocto в ванильное ядро был привнесен скрипт merge_config.sh, который позволяет работать с фрагментами конфигурации. Даррен рассказал, как этим пользоваться.
+
+<br /><iframe allowfullscreen="" frameborder="0" height="375" src="https://www.youtube.com/embed/J8zxekwYMDY" width="750"></iframe>
+
+<br />
+<br />
+6. Уилл Дикон (Will Deacon) сделал отличный и сложный доклад о примитивах ядра Linux, устанавливающих порядок I/O и DMA-операций. Он начал с описания формальной модели памяти ядра, сделал обзор обычных барьеров памяти (memory barriers), а затем перешел к семантике I/O-барьеров. Его отличная манера выступления держала фокус аудитории до самого конца.
+
+<br /><iframe allowfullscreen="" frameborder="0" height="375" src="https://www.youtube.com/embed/i6DayghhA8Q" width="750"></iframe>
+
+<br />
+<br />
+7. Лукас Булвахн (Lukas Bulwahn) из BMW здорово рассказал об исследовательском проекте <a href="https://www.osadl.org/SIL2LinuxMP.sil2-linux-project.0.html">SIL2LinuxMP</a>, в котором я тоже принял участие в этом году. Данный проект исследует возможность применения Linux в системах с повышенными требованиями к надежности (safety-critical systems). В первую очередь, Лукас объяснил понятие надежности с инженерной точки зрения, затем рассказал о технических и организационных аспектах проекта SIL2LinuxMP, в котором участвуют ряд крупных производственных компаний, люди из академических кругов и независимые эксперты.
+
+<br /><iframe allowfullscreen="" frameborder="0" height="375" src="https://www.youtube.com/embed/Use04MfL2ms" width="750"></iframe>
+
+<br />
+<br />
+8. Мэтью Гаррет (Matthew Garrett), который с недавнего времени работает в Google, рассказал о серии патчей под названием <a href="https://mjg59.dreamwidth.org/50577.html">Kernel Lockdown</a>. Идея очень хорошая -- необходимо иметь возможность защитить ядро от суперпользователя, например, чтобы он не мог поставить руткит. Так уже давно делает ядро Windows. Оказывается, и все крупные дистрибутивы Linux уже поставляются с Kernel Lockdown. Однако данная серия патчей все еще не в ванильном ядре, и Мэтью также пояснил политическую подоплеку этого факта.
+
+<br /><a href="https://events.linuxfoundation.org/wp-content/uploads/2017/12/Why-lock-down-the-kernel_Matthew-Garrett.pdf"><img src="https://habrastorage.org/webt/up/hz/n3/uphzn3twvrbwpaunhjpibatum7g.png"/></a>
+
+<br />
+<br />
+9. На KVM форуме я посетил отличное выступление о модели безопасности QEMU. Стефан Хайноцзи (Stefan Hajnoczi) описал архитектуру виртуализации на основе QEMU/KVM, периметр атаки для ее компонентов и способы его уменьшить. Слайды:
+
+<br /><a href="https://vmsplice.net/~stefan/stefanha-kvm-forum-2018.pdf"><img src="https://habrastorage.org/webt/l-/t_/ba/l-t_bay7m_fa8-_ugxyc-es5wfo.png" /></a>
+
+<br />
+<br />
+10. Грег Кроах-Хартман (Greg Kroah-Hartman) сделал задорное выступление о том, как сообщество ядра Linux устраняло Meltdown и Spectre различных вариантов, как вел себя Intel, какие уроки были извлечены из всей этой истории, и чего нам ожидать в будущем. По некоторым причинам в публичном доступе нет ни слайдов, ни видеозаписи, но я просто обязан упомянуть его выступление.
+
+<br />
+<br />
+11. Также хочу рассказать о докладе Кнута Оманга (Knut Omang) о системе unit-тестов для ядра Linux. Мне очень понравилось его выступление и сама эта работа. Докладчик работает в Oracle и ему, к большому сожалению, досталась задача поддерживать некоторый драйвер ядра Linux размером в 20000 строк. Драйвер этот весьма плохого качества и для ванильного ядра не годится. Однако Oracle его поставляет, и поддерживать этот код нужно. Но Кнут не отчаялся, он решил планомерно исправить ситуацию с помощью test-driven development и unit-тестов. Докладчик рассказал о системе <a href="https://github.com/oracle/ktf">Kernel Test Framework</a>, которую он для этого разрабатывает.
+
+<br />
+<br />
+12.  И наконец расскажу про ежегодный отчет Кейса Кука (Kees Cook) о статусе проекта Kernel Self-Protection Project (KSPP). Идея проекта состоит в том, что безопасность операционной системы -- это больше, чем просто исправление ошибок в коде и разделение доступа к ресурсам. Операционная система должна отрабатывать безопасно в случае ошибки или попытки атаки. Поэтому KSPP ставит своей задачей устранение в ванильном ядре Linux целых классов уязвимостей и методов их эксплуатации. Кейс Кук -- лидер данного проекта и также мэйнтейнер ряда ядерных подсистем. В своем выступлении он дал обзор результатов KSPP с версии ядра 4.14 по 4.20. Слайды:
+
+<br /><a href="https://outflux.net/slides/2018/lss-eu/kspp.pdf"><img src="https://habrastorage.org/webt/rj/p8/vh/rjp8vhgd87xps1suxfv2-vjz1hu.png" /></a>
+
+<br />
+<br />
+<b>Приятного просмотра!</b>
