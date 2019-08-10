@@ -1,0 +1,219 @@
+---
+layout: post
+title:  "Case study: Searching for a vulnerability pattern in the Linux kernel"
+date:   2019-08-10 13:37:00 +0300
+---
+
+This short article describes the investigation of one funny Linux kernel vulnerability
+and my experience with `Semmle QL` and `Coccinelle`, that I used to search for similar bugs.
+
+# The kernel bug
+
+Several days ago my custom [syzkaller][1] instance got an interesting crash.
+It had a stable reproducer and I started the investigation.
+_Here I take a chance to say that syzkaller is an awesome project which has a great
+impact on our industry. Big respect to people who work on it._
+
+I've found out that the bug causing this crash was introduced to `drivers/block/floppy.c`
+in the commit [229b53c9bf4e][2] (June 2017).
+
+The `compat_getdrvstat()` function has such a code:
+```
+static int compat_getdrvstat(int drive, bool poll,
+			    struct compat_floppy_drive_struct __user *arg)
+{
+	struct compat_floppy_drive_struct v;
+
+	memset(&v, 0, sizeof(struct compat_floppy_drive_struct));
+...
+	if (copy_from_user(arg, &v, sizeof(struct compat_floppy_drive_struct)))
+		return -EFAULT;
+...
+}
+```
+
+Here `copy_from_user()` has the userspace pointer `arg` as the copy destination and
+the kernelspace pointer `&v` as the source. That is obviously a bug. It can be triggered
+by a user with access to floppy drive.
+
+The effect of this bug on `x86_64` is funny: it causes `memset()` of the userspace memory from the kernelspace:
+ 1. `access_ok()` for the `copy_from_user()` source (2nd parameter) fails;
+ 2. `copy_from_user()` then tries to erase the copy destination (1st parameter);
+ 3. but the destination is in the userspace instead of kernelspace __:-)__
+ 4. so we have a kernel crash:
+```
+[   40.937098] BUG: unable to handle page fault for address: 0000000041414242
+[   40.938714] #PF: supervisor write access in kernel mode
+[   40.939951] #PF: error_code(0x0002) - not-present page
+[   40.941121] PGD 7963f067 P4D 7963f067 PUD 0
+[   40.942107] Oops: 0002 [#1] SMP NOPTI
+[   40.942968] CPU: 0 PID: 292 Comm: d Not tainted 5.3.0-rc3+ #7
+[   40.944288] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Ubuntu-1.8.2-1ubuntu1 04/01/2014
+[   40.946478] RIP: 0010:__memset+0x24/0x30
+[   40.947394] Code: 90 90 90 90 90 90 0f 1f 44 00 00 49 89 f9 48 89 d1 83 e2 07 48 c1 e9 03 40 0f b6 f6 48 b8 01 01 01 01 01 01 01 01 48 0f af c6 <f3> 48 ab 89 d1 f3 aa 4c 89 c8 c3 90 49 89 f9 40 88 f0 48 89 d1 f3
+[   40.951721] RSP: 0018:ffffc900003dbd58 EFLAGS: 00010206
+[   40.952941] RAX: 0000000000000000 RBX: 0000000000000034 RCX: 0000000000000006
+[   40.954592] RDX: 0000000000000004 RSI: 0000000000000000 RDI: 0000000041414242
+[   40.956169] RBP: 0000000041414242 R08: ffffffff8200bd80 R09: 0000000041414242
+[   40.957753] R10: 0000000000121806 R11: ffff88807da28ab0 R12: ffffc900003dbd7c
+[   40.959407] R13: 0000000000000001 R14: 0000000041414242 R15: 0000000041414242
+[   40.961062] FS:  00007f91115c4440(0000) GS:ffff88807da00000(0000) knlGS:0000000000000000
+[   40.962603] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   40.963695] CR2: 0000000041414242 CR3: 000000007c584000 CR4: 00000000000006f0
+[   40.965004] Call Trace:
+[   40.965459]  _copy_from_user+0x51/0x60
+[   40.966141]  compat_getdrvstat+0x124/0x170
+[   40.966781]  fd_compat_ioctl+0x69c/0x6d0
+[   40.967423]  ? selinux_file_ioctl+0x16f/0x210
+[   40.968117]  compat_blkdev_ioctl+0x21d/0x8f0
+[   40.968864]  __x32_compat_sys_ioctl+0x99/0x250
+[   40.969659]  do_syscall_64+0x4a/0x110
+[   40.970337]  entry_SYSCALL_64_after_hwframe+0x44/0xa9
+```
+
+I haven't found a way to exploit it for privilege escalation.
+
+_Kudos to my friends for their advices and jokes, we had nice time playing with it!_
+
+# Variant analysis: Semmle QL
+
+My first thought was to search for similar issues through whole kernel source code.
+I decided to try [Semmle QL][3] for that (Semmle are very active recently).
+There is a nice [introduction to QL and LGTM][4], which gives enough information for a quick start.
+
+So I've opened the [Linux kernel project in the Query console][5] and just searched for `copy_from_user()` calls:
+
+```
+import cpp
+
+from FunctionCall call
+where call.getTarget().getName() = "copy_from_user"
+select call, "I see a copy_from_user here!"
+```
+
+This query gave only 616 results. That's strange, the Linux kernel has much more `copy_from_user()` calls.
+I've found [the answer][6] in the LGTM documentation:
+```
+LGTM extracts information from each codebase and generates a database
+ready for querying. For C/C++ projects, the source code is built
+as part of the extraction process.
+```
+
+So the Linux kernel config used for kernel build is limiting the scope of LGTM analysis.
+If the some kernel subsystem not enabled in the config, it is not built and hence we can't analyze its code in LGTM.
+
+The LGTM documentation also says that:
+
+```
+You may need to customize the process to enable LGTM to build the project.
+You can do this by adding to your repository an lgtm.yml file for your project.
+```
+
+I decided to create a custom `lgtm.yml` file for the Linux kernel and asked for a default one at the LGTM community forum:
+[https://discuss.lgtm.com/t/custom-lgtm-yml-for-the-official-linux-kernel/2246][7]
+
+The answer from the LGTM Team was really fast and helpful:
+
+```
+The worker machines we use on lgtm.com are small and resource-constrained,
+so unfortunately make defconfig is just about the biggest config we can use.
+It takes 3.5 hours for the full build+extraction+analysis for every commit,
+and we allow 4 hours at most.
+```
+
+That's not good, however they are currently working on a solution for big projects.
+
+So I decided to try another tool for my investigation.
+
+# Variant analysis: Coccinelle
+
+I heard about [Coccinelle][8]. The Linux kernel community [uses this tool a lot][9].
+Moreover, I remembered that [Kees Cook searched for][10] `copy_from_user()` mistakes with Coccinelle.
+So I started to learn the Semantic Patch Language (SmPL) and finally wrote this rule:
+
+```
+virtual report
+
+@cfu@
+identifier f;
+type t;
+identifier v;
+position decl_p;
+position copy_p;
+@@
+
+f(..., t v@decl_p, ...)
+{
+<+...
+copy_from_user@copy_p(v, ...)
+...+>
+}
+
+@script:python@
+f << cfu.f;
+t << cfu.t;
+v << cfu.v;
+decl_p << cfu.decl_p;
+copy_p << cfu.copy_p;
+@@
+
+if '__user' in t:
+  msg0 = "function \"" + f + "\" has arg \"" + v + "\" of type \"" + t + "\""
+  coccilib.report.print_report(decl_p[0], msg0)
+  msg1 = "copy_from_user uses \"" + v + "\" as the destination. What a shame!\n"
+  coccilib.report.print_report(copy_p[0], msg1)
+```
+
+The idea behind it is simple. Usually `copy_from_user()` is called in functions which take
+a userspace pointer as a parameter. My rule describes the case when `copy_from_user()`
+takes the userspace pointer as the copy destination:
+
+ - the main part of the rule finds all cases when a parameter `v` of some function `f()` is
+ used as the 1st parameter of `copy_from_user()`;
+ - in case of a match the following python script checks whether `v` has the `__user` annotation
+ in its type.
+
+The rule output:
+
+```
+./drivers/block/floppy.c:3756:49-52: function "compat_getdrvprm" has arg "arg"
+of type "struct compat_floppy_drive_params __user *"
+./drivers/block/floppy.c:3783:5-19: copy_from_user uses "arg" as the
+destination. What a shame!
+
+./drivers/block/floppy.c:3789:49-52: function "compat_getdrvstat" has arg "arg"
+of type "struct compat_floppy_drive_struct __user *"
+./drivers/block/floppy.c:3819:5-19: copy_from_user uses "arg" as the
+destination. What a shame!
+```
+
+So there are two (not very dangerous) kernel vulnerabilities that fit this bug pattern.
+
+# Public 0day
+
+It turned out that I was not the first one who found these bugs.
+Jann Horn [reported][11] them in March 2019. He used [sparse][14] to find them.
+I'm absolutely sure that this tool can find much more error cases than my PoC Coccinelle rule.
+
+But in fact Jann's patch was lost and it didn't get into the mainline.
+
+So these two bugs could be called "public zero-days" __:-)__
+
+Anyway, I've [reported this issue][12] to LKML, and [Jens Axboe will apply][13] the lost Jann's patch for
+the Linux kernel v5.4.
+
+
+[1]: https://github.com/google/syzkaller
+[2]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=229b53c9bf4e1132a4aa6feb9632a7a1f1d08c5c
+[3]: https://semmle.com/ql
+[4]: https://blog.semmle.com/introduction-to-variant-analysis-part-2/
+[5]: https://lgtm.com/projects/g/torvalds/linux/
+[6]: https://lgtm.com/help/lgtm/cpp-extraction
+[7]: https://discuss.lgtm.com/t/custom-lgtm-yml-for-the-official-linux-kernel/2246
+[8]: http://coccinelle.lip6.fr/
+[9]: http://coccinelle.lip6.fr/impact_linux.php
+[10]: https://outflux.net/slides/2011/defcon/kernel-exploitation.pdf
+[11]: https://patchwork.kernel.org/patch/10872219/
+[12]: https://www.openwall.com/lists/kernel-hardening/2019/08/09/14
+[13]: https://www.openwall.com/lists/kernel-hardening/2019/08/09/15
+[14]: https://www.kernel.org/doc/html/latest/dev-tools/sparse.html
