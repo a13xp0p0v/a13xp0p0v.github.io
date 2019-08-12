@@ -129,12 +129,13 @@ So I decided to try another tool for my investigation.
 
 I heard about [Coccinelle][8]. The Linux kernel community [uses this tool a lot][9].
 Moreover, I remembered that [Kees Cook searched for][10] `copy_from_user()` mistakes with Coccinelle.
-So I started to learn the Semantic Patch Language (SmPL) and finally wrote this rule:
+So I started to learn the Semantic Patch Language (SmPL) and finally wrote this rule (thanks to Julia Lawall
+for the feedback):
 
 ```
 virtual report
 
-@cfu@
+@cfu exists@
 identifier f;
 type t;
 identifier v;
@@ -144,9 +145,9 @@ position copy_p;
 
 f(..., t v@decl_p, ...)
 {
-<+...
+... when any
 copy_from_user@copy_p(v, ...)
-...+>
+... when any
 }
 
 @script:python@
