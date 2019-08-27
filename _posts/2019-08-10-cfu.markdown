@@ -5,19 +5,19 @@ date:   2019-08-10 13:37:00 +0300
 ---
 
 This short article describes the investigation of one funny Linux kernel vulnerability
-and my experience with `Semmle QL` and `Coccinelle`, that I used to search for similar bugs.
+and my experience with `Semmle QL` and `Coccinelle`, which I used to search for similar bugs.
 
 # The kernel bug
 
 Several days ago my custom [syzkaller][1] instance got an interesting crash.
 It had a stable reproducer and I started the investigation.
-_Here I take a chance to say that syzkaller is an awesome project which has a great
-impact on our industry. Big respect to people who work on it._
+_Here I will take the opportunity to say that syzkaller is an awesome project with a great
+impact on our industry. A tip of my hat to the people working on it!_
 
-I've found out that the bug causing this crash was introduced to `drivers/block/floppy.c`
-in the commit [229b53c9bf4e][2] (June 2017).
+I found out that the bug causing this crash was introduced to `drivers/block/floppy.c`
+in commit [229b53c9bf4e][2] (June 2017).
 
-The `compat_getdrvstat()` function has such a code:
+The `compat_getdrvstat()` function has the following code:
 ```
 static int compat_getdrvstat(int drive, bool poll,
 			    struct compat_floppy_drive_struct __user *arg)
@@ -34,13 +34,13 @@ static int compat_getdrvstat(int drive, bool poll,
 
 Here `copy_from_user()` has the userspace pointer `arg` as the copy destination and
 the kernelspace pointer `&v` as the source. That is obviously a bug. It can be triggered
-by a user with access to floppy drive.
+by a user with access to the floppy drive.
 
 The effect of this bug on `x86_64` is funny: it causes `memset()` of the userspace memory from the kernelspace:
- 1. `access_ok()` for the `copy_from_user()` source (2nd parameter) fails;
- 2. `copy_from_user()` then tries to erase the copy destination (1st parameter);
- 3. but the destination is in the userspace instead of kernelspace __:-)__
- 4. so we have a kernel crash:
+ 1. `access_ok()` for the `copy_from_user()` source (second parameter) fails.
+ 2. `copy_from_user()` then tries to erase the copy destination (first parameter).
+ 3. But the destination is in the userspace instead of kernelspace __:-)__
+ 4. So we have a kernel crash:
 ```
 [   40.937098] BUG: unable to handle page fault for address: 0000000041414242
 [   40.938714] #PF: supervisor write access in kernel mode
@@ -73,15 +73,15 @@ The effect of this bug on `x86_64` is funny: it causes `memset()` of the userspa
 
 I haven't found a way to exploit it for privilege escalation.
 
-_Kudos to my friends for their advices and jokes, we had nice time playing with it!_
+_Kudos to my friends for their advice and jokes -- we had a nice time playing with it!_
 
 # Variant analysis: Semmle QL
 
-My first thought was to search for similar issues through whole kernel source code.
-I decided to try [Semmle QL][3] for that (Semmle are very active recently).
-There is a nice [introduction to QL and LGTM][4], which gives enough information for a quick start.
+My first thought was to search for similar issues throughout the entire kernel source code.
+I decided to try [Semmle QL][3] for that (Semmle has been very active recently).
+There is a nice [introduction to QL and LGTM][4] with enough information for a quick start.
 
-So I've opened the [Linux kernel project in the Query console][5] and just searched for `copy_from_user()` calls:
+So I opened the [Linux kernel project in the Query console][5] and just searched for `copy_from_user()` calls:
 
 ```
 import cpp
@@ -91,8 +91,8 @@ where call.getTarget().getName() = "copy_from_user"
 select call, "I see a copy_from_user here!"
 ```
 
-This query gave only 616 results. That's strange, the Linux kernel has much more `copy_from_user()` calls.
-I've found [the answer][6] in the LGTM documentation:
+This query gave only 616 results. That's strange, since the Linux kernel has many more `copy_from_user()` calls than that.
+I found [the answer][6] in the LGTM documentation:
 ```
 LGTM extracts information from each codebase and generates a database
 ready for querying. For C/C++ projects, the source code is built
@@ -100,7 +100,7 @@ as part of the extraction process.
 ```
 
 So the Linux kernel config used for kernel build is limiting the scope of LGTM analysis.
-If the some kernel subsystem not enabled in the config, it is not built and hence we can't analyze its code in LGTM.
+If some kernel subsystem is not enabled in the config, it is not built and hence we can't analyze its code in LGTM.
 
 The LGTM documentation also says that:
 
@@ -109,7 +109,7 @@ You may need to customize the process to enable LGTM to build the project.
 You can do this by adding to your repository an lgtm.yml file for your project.
 ```
 
-I decided to create a custom `lgtm.yml` file for the Linux kernel and asked for a default one at the LGTM community forum:
+I decided to create a custom `lgtm.yml` file for the Linux kernel and asked for a default one on the LGTM community forum:
 [https://discuss.lgtm.com/t/custom-lgtm-yml-for-the-official-linux-kernel/2246][7]
 
 The answer from the LGTM Team was really fast and helpful:
@@ -127,10 +127,10 @@ So I decided to try another tool for my investigation.
 
 # Variant analysis: Coccinelle
 
-I heard about [Coccinelle][8]. The Linux kernel community [uses this tool a lot][9].
+I had heard about [Coccinelle][8]. The Linux kernel community [uses this tool a lot][9].
 Moreover, I remembered that [Kees Cook searched for][10] `copy_from_user()` mistakes with Coccinelle.
 So I started to learn the Semantic Patch Language (SmPL) and finally wrote this rule (thanks to Julia Lawall
-for the feedback):
+for feedback):
 
 ```
 virtual report
@@ -165,16 +165,16 @@ if '__user' in t:
   coccilib.report.print_report(copy_p[0], msg1)
 ```
 
-The idea behind it is simple. Usually `copy_from_user()` is called in functions which take
+The idea behind it is simple. Usually `copy_from_user()` is called in functions that take
 a userspace pointer as a parameter. My rule describes the case when `copy_from_user()`
 takes the userspace pointer as the copy destination:
 
- - the main part of the rule finds all cases when a parameter `v` of some function `f()` is
- used as the 1st parameter of `copy_from_user()`;
- - in case of a match the following python script checks whether `v` has the `__user` annotation
+ - The main part of the rule finds all cases when a parameter `v` of some function `f()` is
+ used as the first parameter of `copy_from_user()`.
+ - In case of a match, the python script checks whether `v` has the `__user` annotation
  in its type.
 
-The rule output:
+Here is the Coccinelle output:
 
 ```
 ./drivers/block/floppy.c:3756:49-52: function "compat_getdrvprm" has arg "arg"
@@ -190,18 +190,17 @@ destination. What a shame!
 
 So there are two (not very dangerous) kernel vulnerabilities that fit this bug pattern.
 
-# Public 0day
+# Public 0days
 
-It turned out that I was not the first one who found these bugs.
+It turned out that I was not the first to find these bugs.
 Jann Horn [reported][11] them in March 2019. He used [sparse][14] to find them.
-I'm absolutely sure that this tool can find much more error cases than my PoC Coccinelle rule.
+I'm absolutely sure that this tool can find many more error cases than my PoC Coccinelle rule.
 
-But in fact Jann's patch was lost and it didn't get into the mainline.
+But in fact, Jann's patch was lost and it didn't get into the mainline.
 
 So these two bugs could be called "public zero-days" __:-)__
 
-Anyway, I've [reported this issue][12] to LKML, and [Jens Axboe will apply][13] the lost Jann's patch for
-the Linux kernel v5.4.
+Anyway, I've [reported this issue][12] to LKML, and [Jens Axboe will apply][13] Jann's lost patch for Linux kernel v5.4.
 
 
 [1]: https://github.com/google/syzkaller
