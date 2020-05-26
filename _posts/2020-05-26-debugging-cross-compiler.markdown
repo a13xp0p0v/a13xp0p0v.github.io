@@ -10,14 +10,14 @@ That is a short funny article that I decided to write after two days (and nights
 
 Two years ago I was working on [porting STACKLEAK security feature][0] from Grsecurity/PaX into the Linux kernel mainline. The feature [has landed][1] in `v4.20`, but without detecting Stack Clash attack [against Linux kernel][2]. That functionality was not needed because during discussion of the patch series, the maintainers decided to remove all Variable Length Arrays (VLA) from the mainline kernel. Kees Cook with a team of kernel developers participated in that big cleanup. Now it is finished and the kernel is built with `-Wvla`, so `alloca()` is prohibited in the kernel, which is nice.
 
-Currently I'm working on a patch series with several improvements for STACKLEAK gcc plugin in the mainline. Among other things, I've made the stack tracking instrumentation simpler, dropped searching for `alloca()` and added this simple assertion:
+Currently I'm working on a patch series that improves the STACKLEAK gcc plugin in the mainline. Among other things, I've made the stack tracking instrumentation simpler, dropped searching for `alloca()` and added this assertion:
 
 ```c
 	/* Variable Length Arrays (VLAs) are forbidden in the kernel */
 	gcc_assert(!cfun->calls_alloca);
 ```
 
-Testing gcc plugins for Linux kernel is a big headache, since the kernel can be built with any gcc version [starting from gcc-4.6][3]! That is why I've created the project [kernel-build-containers][4] that provides Docker containers for handy building of Linux kernel (or other software) with various compilers on various architectures.
+Testing gcc plugins for Linux kernel is a big headache, since the kernel can be built with any gcc version [starting from gcc-4.6][3]! That is why I've created the [kernel-build-containers][4] project that provides Docker containers for handy building of Linux kernel (or other software) with various compilers for various architectures.
 
 Last Friday evening I started the final testing of my STACKLEAK improvements and launched kernel compilation in `kernel-build-containers`. But next morning I was really confused by the results:
 <br/>
