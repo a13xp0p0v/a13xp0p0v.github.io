@@ -46,7 +46,7 @@ So my assertion failed for gcc before version 7 only for `arm64`. At first I tho
 
 Okay. Sunday night... So quiet around (kids are sleeping)... Time to get some drink and build a compiler with debug symbols and then quickly find the issue in the morning. Huh, not so easy. And the painful fun began.
 
-I needed a cross compiler that builds the kernel for `arm64` on my `x86_64` machine. There are many nice tutorials about creating it, for example [this][5] and [this][6] and [that][7]. I struggled with them for several hours, but failed. Making `libgcc` was missing various headers all the time. Finally a nice idea crossed my tired mind: __give up and just install debug symbols for the cross compiler package in the build container, so easy!__ Nice, I went to sleep satisfied with that.
+I needed a cross compiler that builds the kernel for `arm64` on my `x86_64` machine. There are many nice tutorials about creating it, for example [this][5] and [this][6] and [that][7]. I struggled with them for several hours, but failed. Making `libgcc` was missing various headers every time. Finally a nice idea crossed my tired mind: __give up and just install debug symbols for the cross compiler package in the build container, so easy!__ Nice, I went to sleep satisfied with that.
 
 ## Give me debug symbols!
 
@@ -63,7 +63,7 @@ Gonna run interactive bash...
 
 The `kernel-build-containers` are based on Ubuntu, so I followed the how-to in [Ubuntu Debug Symbol Packages][8] documentation...
 
-__Fail! No luck!__ Ubuntu doesn't provide `gcc-6-aarch64-linux-gnu-dbgsym` package. There is no debug symbol package for __any__ gcc cross compiler for `aarch64` at [http://ddebs.ubuntu.com][9]. Grrr, not funny. I decided to try the same on Fedora. But how to install old `gcc-6` on my relatively fresh `Fedora 31`? Oh, that is pain. You need to search for the desired package and its dependencies at some RPM search engines, download them... No!
+__Fail! No luck!__ Ubuntu doesn't provide `gcc-6-aarch64-linux-gnu-dbgsym` package. There is no debug symbol package for __any__ gcc cross compiler for `aarch64` at [http://ddebs.ubuntu.com][9]. Grrr, not funny. I decided to try the same on Fedora. But how to install old `gcc-6` on my relatively fresh `Fedora 31`? Oh, that is a pain. You usually need to search for the desired package and its dependencies at some RPM search engines, download them... No!
 
 <p align="center">
   <img width="560" src="/img/mememe_give_me_debug_symbols.jpg">
@@ -97,7 +97,7 @@ Yeah, the container worked. Now getting debug symbols for a package should be ea
 $dnf debuginfo-install gcc-aarch64-linux-gnu
 ```
 
-What?! __It failed!__ Fedora doesn't provide the debuginfo for the cross compiler, it has only `gcc-base-debuginfo` for regular `gcc-6`. So near and yet so far :(
+What?! __It failed!__ Fedora doesn't provide the debuginfo for the cross compiler, it only has `gcc-base-debuginfo` for regular `gcc-6`. So near and yet so far :(
 
 
 ## Building cross compiler: second try
