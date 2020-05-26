@@ -115,9 +115,9 @@ BR2_GCC_VERSION_6_X=y
 BR2_GCC_VERSION="6.4.0"
 ```
 
-Then I invoked `make`, but building failed with error. Oh! It turned out that default `master` branch of `buildroot-toolchains` repository is [out-of-date][13]. On the other hand the fresh `toolchains.bootlin.com-2020.02` branch doesn't support old `gcc-6`. Finally I determined that `stable` branch both works and supports `gcc-6`. It built the toolchain! But gcc was built without debug symbols. But why `BR2_ENABLE_DEBUG` didn't work?
+Then I invoked `make`, but building failed with error. Oh! It turned out that default `master` branch of `buildroot-toolchains` repository is [out-of-date][13]. On the other hand, the fresh `toolchains.bootlin.com-2020.02` branch doesn't support old `gcc-6`. Finally I determined that `stable` branch both works and supports `gcc-6`. It built the toolchain! But gcc was built without debug symbols. But why `BR2_ENABLE_DEBUG` didn't work?
 
-I found that `BR2_ENABLE_DEBUG` config option is only about __target__ Buildroot packages. But toolchain is a __host__ package. So I hacked the Makefile a bit and got the cross compiler with debug symbols:
+I found that `BR2_ENABLE_DEBUG` config option is only about __target__ Buildroot packages. But toolchain is a __host__ package. So I hacked the Makefile a little bit and got the cross compiler with debug symbols:
 
 ```diff
 diff --git a/package/gcc/gcc-final/gcc-final.mk b/package/gcc/gcc-final/gcc-final.mk
@@ -182,7 +182,7 @@ In fact `aarch64-buildroot-linux-gnu-gcc` is not a compiler itself, that is only
   Breakpoint 1 at 0x9882c0
   ```
 
- 3. Run the compiler
+ 3. Run the compiler:
   ```
   (gdb) run 
   Breakpoint 1, 0x00000000009882c0 in execute_fixup_cfg() ()
