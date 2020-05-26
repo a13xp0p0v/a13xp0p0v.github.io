@@ -102,7 +102,7 @@ What?! __It failed!__ Fedora doesn't provide the debuginfo for the cross compile
 
 ## Building cross compiler: second try
 
-Back in 2012 I was an embedded kernel developer. These good old days still remind me that __toolchains are complicated__. So I decided not to try building the cross compiler myself again, but use the knowledge of real experts in that area. From Open Source Summit I remembered that [Thomas Petazzoni][10] at Bootlin told that `the Buildroot project` can create a toolchain in addition to the kernel and file system of an embedded device. So I found the `buildroot-toolchains` project, cloned and started to learn it.
+Back in 2012 I was an embedded kernel developer. These good old days still remind me that __toolchains are complicated__. So I decided not to try building the cross compiler myself again, but use the knowledge of real experts in that area. From Open Source Summit I remembered that [Thomas Petazzoni][10] at Bootlin told that `the Buildroot project` can create a toolchain in addition to the kernel and file system of an embedded device. So I found the [buildroot-toolchains][11] project, cloned and started to learn it.
 
 The configuring looked quite straightforward. Buildroot uses `kconfig`, just like the Linux kernel. So I took a [Buildroot config fragment][12] from a similar toolchain and changed these options:
 
