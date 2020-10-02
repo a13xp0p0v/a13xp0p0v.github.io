@@ -6,7 +6,11 @@ permalink: /conference_talks/
 
 # [Following the Linux Kernel Defence Map][28]
 
-__Conference:__ Linux Plumbers Conference 2020 &nbsp; &nbsp; __Date:__ 25.08.2020 &nbsp; &nbsp; [__Slides__][29] &nbsp; &nbsp; [__Video__][30]
+__Conference:__ Linux Plumbers Conference 2020
+
+__Date:__ 25.08.2020
+
+[__Slides__][29] &nbsp; &nbsp; [__Video__][30]
 
 __Description__
 
@@ -20,7 +24,11 @@ In this short talk we will follow the [Linux Kernel Defence Map][31] and explore
 
 # [Panel Discussion: What is Lacking in Linux Security and What Are or Should We be Doing about This][26]
 
-__Conference:__ Linux Security Summit North America 2020 &nbsp; &nbsp; __Date:__ 01.07.2020 &nbsp; &nbsp; [__Video__][27]
+__Conference:__ Linux Security Summit North America 2020
+
+__Date:__ 01.07.2020
+
+[__Video__][27]
 
 __Participants:__ Elena Reshetova (Intel), Allison Marie Naaktgeboren (PhD Student), Alexander Popov (Positive Technologies), Mimi Zohar (IBM), Kees Cook (Google)
 
@@ -28,7 +36,11 @@ __Participants:__ Elena Reshetova (Intel), Allison Marie Naaktgeboren (PhD Stude
 
 # [Exploiting a Linux Kernel Vulnerability in the V4L2 Subsystem][23]
 
-__Conference:__ OffensiveCon 2020 &nbsp; &nbsp; __Date:__ 15.02.2020 &nbsp; &nbsp; [__Slides__][24] &nbsp; &nbsp; [__Video__][25]
+__Conference:__ OffensiveCon 2020
+
+__Date:__ 15.02.2020
+
+[__Slides__][24] &nbsp; &nbsp; [__Video__][25]
 
 __Description__
 
@@ -38,7 +50,11 @@ CVE-2019-18683 refers to a bunch of 5-year old race conditions in the V4L2 subsy
 
 # [Фаззинг ядра Linux на практике][20]
 
-__Conference:__ ISPRAS Open Conference 2019 &nbsp; &nbsp; __Date:__ 06.12.2019 &nbsp; &nbsp; [__Slides__][21] &nbsp; &nbsp; [__Video__][22]
+__Conference:__ ISPRAS Open Conference 2019
+
+__Date:__ 06.12.2019
+
+[__Slides__][21] &nbsp; &nbsp; [__Video__][22]
 
 __Description__
 
@@ -50,7 +66,11 @@ __Description__
 
 # [Между двух огней: уроки участия в Kernel Self Protection Project][17]
 
-__Conference:__ Linux Piter 2018 &nbsp; &nbsp; __Date:__ 03.11.2018 &nbsp; &nbsp; [__Slides__][18] &nbsp; &nbsp; [__Video__][19]
+__Conference:__ Linux Piter 2018
+
+__Date:__ 03.11.2018
+
+[__Slides__][18] &nbsp; &nbsp; [__Video__][19]
 
 __Description__
 
@@ -62,7 +82,11 @@ __Description__
 
 # [Between the Millstones: Lessons of Self-Funded Participation in Kernel Self Protection Project][15]
 
-__Conference:__ Open Source Summit Europe 2018 &nbsp; &nbsp; __Date:__ 22.10.2018 &nbsp; &nbsp; [__Slides__][16]
+__Conference:__ Open Source Summit Europe 2018
+
+__Date:__ 22.10.2018
+
+[__Slides__][16]
 
 __Description__
 
@@ -74,7 +98,11 @@ Alexander Popov entered this battlefield in spring 2017 and started his self-fun
 
 # [STACKLEAK: A Long Way to the Linux Kernel Mainline][12]
 
-__Conference:__ Linux Security Summit North America 2018 &nbsp; &nbsp; __Date:__ 27.08.2018 &nbsp; &nbsp; [__Slides__][13] &nbsp; &nbsp; [__Video__][14]
+__Conference:__ Linux Security Summit North America 2018
+
+__Date:__ 27.08.2018
+
+[__Slides__][13] &nbsp; &nbsp; [__Video__][14]
 
 __Description__
 
@@ -84,7 +112,11 @@ STACKLEAK is a Linux kernel security feature initially created by Grsecurity/PaX
 
 # [How STACKLEAK improves Linux kernel security][9]
 
-__Conference:__ Linux Piter 2017 &nbsp; &nbsp; __Date:__ 04.11.2017 &nbsp; &nbsp; [__Slides__][10] &nbsp; &nbsp; [__Video__][11]
+__Conference:__ Linux Piter 2017
+
+__Date:__ 04.11.2017
+
+[__Slides__][10] &nbsp; &nbsp; [__Video__][11]
 
 __Description__
 
@@ -97,7 +129,11 @@ STACKLEAK is a Linux kernel security feature initially created by Grsecurity/PaX
 
 # [Race For Root: The Analysis Of The Linux Kernel Race Condition Exploit][6]
 
-__Conference:__ Still Hacking Anyway (SHA2017) &nbsp; &nbsp; __Date:__ 07.08.2017 &nbsp; &nbsp; [__Slides__][7] &nbsp; &nbsp; [__Video__][8]
+__Conference:__ Still Hacking Anyway (SHA2017)
+
+__Date:__ 07.08.2017
+
+[__Slides__][7] &nbsp; &nbsp; [__Video__][8]
 
 __Description__
 
@@ -107,7 +143,11 @@ CVE-2017-2636 is a 7-year old race condition in the Linux kernel that was fixed 
 
 # [KASan in Bare-Metal Hypervisor][4]
 
-__Conference:__ LinuxCon Japan 2016 &nbsp; &nbsp; __Date:__ 13.07.2016 &nbsp; &nbsp; [__Slides__][5]
+__Conference:__ LinuxCon Japan 2016
+
+__Date:__ 13.07.2016
+
+[__Slides__][5]
 
 __Description__
 
@@ -118,7 +158,11 @@ on each memory access. In this presentation Alexander Popov will describe the su
 
 # [Использование KASan для автономного гипервизора][1]
 
-__Conference:__ Positive Hack Days VI &nbsp; &nbsp; __Date:__ 17.05.2016 &nbsp; &nbsp; [__Slides__][2] &nbsp; &nbsp; [__Video__][3]
+__Conference:__ Positive Hack Days VI
+
+__Date:__ 17.05.2016
+
+[__Slides__][2] &nbsp; &nbsp; [__Video__][3]
 
 __Description__
 
