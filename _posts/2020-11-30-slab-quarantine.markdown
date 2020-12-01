@@ -37,8 +37,7 @@ contents allows overwriting the vulnerable freed object:
 <center><a href="/img/uaf.png"><img src="/img/uaf.png" width="70%"/></a></center>
 <br>
 
-Note: Heap spraying for out-of-bounds exploitation is a separate technique,
-which sometimes is called "heap grooming."
+Note: Heap spraying for out-of-bounds exploitation is a separate technique.
 
 # An idea
 
