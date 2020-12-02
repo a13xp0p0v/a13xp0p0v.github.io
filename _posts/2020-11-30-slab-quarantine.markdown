@@ -385,7 +385,7 @@ And for now, let me finish with a tiny poem that I composed several
 days ago before going to sleep:
 
 ```
-  Quarantine PoC version three
+  Quarantine patch version three
   Won't appear. No need.
   Let's exploit use-after-free
   Like we always did ;)
