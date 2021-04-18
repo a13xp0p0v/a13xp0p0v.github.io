@@ -4,6 +4,20 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Four Bytes of Power: Exploiting CVE-2021-26708 in the Linux Kernel][33]
+
+__Conference:__ Zer0Con 2021
+
+__Date:__ 09.04.2021
+
+[__Slides__][34] &nbsp; &nbsp;
+
+__Description__
+
+[CVE-2021-26708][35] is assigned to five race condition bugs in the virtual socket implementation of the Linux kernel. These vulnerabilities were [discovered and fixed][36] by Alexander Popov. In this talk, he will describe how to exploit them for local privilege escalation on Fedora 33 Server for x86_64, bypassing SMEP and SMAP. Alexander will demonstrate an artful way of turning very limited kernel memory corruption into a powerful weapon.
+
+<br/>
+
 # [Following the Linux Kernel Defence Map][28]
 
 __Conference:__ Linux Plumbers Conference 2020
@@ -211,3 +225,8 @@ __Description__
 [31]: https://github.com/a13xp0p0v/linux-kernel-defence-map
 [32]: https://github.com/a13xp0p0v/kconfig-hardened-check
 
+
+[33]: https://web.archive.org/web/20210308095728/http://zer0con.org/#speaker-section
+[34]: https://a13xp0p0v.github.io/img/CVE-2021-26708.pdf
+[35]: https://nvd.nist.gov/vuln/detail/CVE-2021-26708
+[36]: https://seclists.org/oss-sec/2021/q1/107
