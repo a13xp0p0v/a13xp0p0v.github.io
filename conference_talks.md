@@ -4,13 +4,27 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Сила четырех байтов: эксплуатация уязвимости CVE-2021-26708 в ядре Linux][38]
+
+__Conference:__ Positive Hack Days 10
+
+__Date:__ 20.05.2021
+
+[__Slides__][39] &nbsp; &nbsp; [__Video__][40]
+
+__Description__
+
+В январе 2021 года Александр обнаружил и устранил пять уязвимостей в реализации виртуальных сокетов ядра Linux. Этим уязвимостям был присвоен идентификатор [CVE-2021-26708][35]. Докладчик детально расскажет об эксплуатации одной них для локального повышения привилегий на Fedora 33 Server для платформы x86_64. Исследователь продемонстрирует, как с помощью небольшой ошибки доступа к памяти получить контроль над всей операционной системой и при этом обойти средства обеспечения безопасности платформы.
+
+<br/>
+
 # [Four Bytes of Power: Exploiting CVE-2021-26708 in the Linux Kernel][33]
 
 __Conference:__ Zer0Con 2021
 
 __Date:__ 09.04.2021
 
-[__Slides__][34] &nbsp; &nbsp;
+[__Slides__][34] &nbsp; &nbsp; [__Video__][37]
 
 __Description__
 
@@ -230,3 +244,9 @@ __Description__
 [34]: https://a13xp0p0v.github.io/img/CVE-2021-26708.pdf
 [35]: https://nvd.nist.gov/vuln/detail/CVE-2021-26708
 [36]: https://seclists.org/oss-sec/2021/q1/107
+[37]: https://www.youtube.com/watch?v=EMcjHfceX44
+
+[38]: https://www.phdays.com/ru/program/reports/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel/
+[39]: https://a13xp0p0v.github.io/img/PHDays10_CVE-2021-26708.pdf
+[40]: https://standoff365.com/phdays10/schedule/tech/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel
+
