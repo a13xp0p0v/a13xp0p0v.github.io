@@ -4,11 +4,11 @@ title:  "Linux Kernel Defence Map"
 date:   2018-04-28 13:37:00 +0300
 ---
 
-## Intro
-
 Linux kernel security is a very complex area. It would be nice to have some
-graphical representation of its current state. So I've created a [__Linux Kernel
-Defence Map__][1] showing the relations between:
+graphical representation of its current state. So I've created a [Linux Kernel
+Defence Map][1].
+
+This map shows the relations between:
 - vulnerability classes / exploitation techniques,
 - kernel defences,
 - bug detection means.
@@ -27,7 +27,7 @@ If you see any mistakes, feel free to create an Issue or ping me via alex.popov@
 
 ## The Map for the recent Linux Kernel
 
-![Linux Kernel Defence Map](https://raw.githubusercontent.com/a13xp0p0v/linux-kernel-defence-map/master/linux-kernel-defence-map.png)
+![Linux Kernel Defence Map](https://raw.githubusercontent.com/a13xp0p0v/linux-kernel-defence-map/master/linux-kernel-defence-map.svg)
 
 ## Links
 

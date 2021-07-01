@@ -4,11 +4,10 @@ title:  "12 great technical talks at SHA2017"
 date:   2017-09-02 13:37:00 +0300
 ---
 
-<img src="https://habrastorage.org/web/363/23b/0a3/36323b0a3e964a9fae8c30783938dc4a.jpeg" alt="Photo by Arron Dowdeswell @Arronandir"/>
-<sub>[awesome photo by Arron Dowdeswell @Arronandir]</sub>
-
 [SHA2017][1] is a large outdoor hacker camp, which took place in the Netherlands on August 4th to 8th. Despite the intensive preparation of my own talk at this event, I have attended a lot of interesting lectures. In this article I'll share my impressions and list 12 great technical talks which I liked the most.
 
+<img src="https://habrastorage.org/web/363/23b/0a3/36323b0a3e964a9fae8c30783938dc4a.jpeg" alt="Photo by Arron Dowdeswell @Arronandir"/>
+<sub>[awesome photo by Arron Dowdeswell @Arronandir]</sub>
 <br>
 
 # How the NSA tracks you

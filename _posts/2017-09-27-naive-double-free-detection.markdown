@@ -4,15 +4,12 @@ title:  "Blocking consecutive double-free in Linux kernel"
 date:   2017-09-27 13:37:00 +0300
 ---
 
-On the 7-th of August I gave a talk at [SHA2017][1]. SHA stands for Still Hacking Anyway, it is a big outdoor hacker camp in Netherlands.
+This short article describes how I improved the SLUB allocator in the Linux kernel.
 
-The [slides][2] and recording of the talk:
+On the 7-th of August I gave a talk at [SHA2017][1]. SHA stands for Still Hacking Anyway, it is a big outdoor hacker camp in Netherlands. The [slides][2] and recording of the talk:
 <iframe width="700" height="400" src="https://www.youtube.com/embed/g7Qm0NpPAz4"></iframe>
 
-<br>
-This short article describes some new aspects of the talk, which haven't been covered in this blog.
-
-The general method of exploiting a double-free error is based on turning it into a use-after-free bug. That is usually achieved by allocating a memory region of the same size between double `free()` calls (see the diagram below). That technique is called `heap spraying`.
+In this talk I showed that the general method of exploiting a double-free error is based on turning it into a use-after-free bug. That is usually achieved by allocating a memory region of the same size between double `free()` calls (see the diagram below). That technique is called `heap spraying`.
 
 <br>
 ![diagram](/img/usual_double_free.png){:class="img-responsive"}

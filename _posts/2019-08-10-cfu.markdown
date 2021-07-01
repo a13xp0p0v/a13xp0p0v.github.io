@@ -5,7 +5,7 @@ date:   2019-08-10 13:37:00 +0300
 ---
 
 This short article describes the investigation of one funny Linux kernel vulnerability
-and my experience with `Semmle QL` and `Coccinelle`, which I used to search for similar bugs.
+and my experience with Semmle QL and Coccinelle, which I used to search for similar bugs.
 
 # The kernel bug
 

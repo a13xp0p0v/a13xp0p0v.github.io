@@ -4,11 +4,7 @@ title:  "Kconfig hardened check for Linux Kernel"
 date:   2018-07-07 13:37:00 +0300
 ---
 
-# Motivation
-
-There are plenty of Linux kernel hardening config options. A lot of them are not enabled by the major distros. We have to enable these options ourselves to make our systems more secure.
-
-But nobody likes checking configs manually. So let the computers do their job!
+There are plenty of Linux kernel hardening config options. A lot of them are not enabled by the major distros. We have to enable these options ourselves to make our systems more secure. But nobody likes checking configs manually. So let the computers do their job!
 
 I've created a [__kconfig-hardened-check.py__][1], which helps me to check the Linux kernel Kconfig option list against my hardening preferences for `x86_64`, which are based on the [KSPP recommended settings][2] and the last public [grsecurity][3] patch (options which they disable).
 

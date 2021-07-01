@@ -5,12 +5,10 @@ date:   2020-11-30 13:37:00 +0300
 ---
 
 It's 2020. Quarantines are everywhere -- and here I'm writing about one, too.
-But this quarantine is of a different kind.
+But this quarantine is of a different kind. In this article I'll describe the Linux Kernel Heap Quarantine that I developed
+for mitigating kernel use-after-free exploitation.
 
-In this article I'll describe the __Linux Kernel Heap Quarantine__ that I developed
-for mitigating kernel use-after-free exploitation. I will also summarize
-the discussion about the prototype of this security feature on the Linux Kernel
-Mailing List (LKML).
+I will also summarize the discussion about the prototype of this security feature on the Linux Kernel Mailing List (LKML).
 
 # Use-after-free in the Linux kernel
 
