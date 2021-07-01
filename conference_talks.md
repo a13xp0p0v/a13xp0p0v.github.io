@@ -12,6 +12,11 @@ __Date:__ 20.05.2021
 
 [__Slides__][39] &nbsp; &nbsp; [__Video__][40]
 
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/ZB-VYx3578s" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
 __Description__
 
 В январе 2021 года Александр обнаружил и устранил пять уязвимостей в реализации виртуальных сокетов ядра Linux. Этим уязвимостям был присвоен идентификатор [CVE-2021-26708][35]. Докладчик детально расскажет об эксплуатации одной них для локального повышения привилегий на Fedora 33 Server для платформы x86_64. Исследователь продемонстрирует, как с помощью небольшой ошибки доступа к памяти получить контроль над всей операционной системой и при этом обойти средства обеспечения безопасности платформы.
@@ -25,6 +30,11 @@ __Conference:__ Zer0Con 2021
 __Date:__ 09.04.2021
 
 [__Slides__][34] &nbsp; &nbsp; [__Video__][37]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/EMcjHfceX44" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 
 __Description__
 
@@ -40,6 +50,10 @@ __Date:__ 25.08.2020
 
 [__Slides__][29] &nbsp; &nbsp; [__Video__][30]
 
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/4c01jjbQmBc?start=8555" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 __Description__
 
 Linux kernel security is a very complex topic. To learn it, I created a [Linux Kernel Defence Map][31] showing the relationships between vulnerability classes, exploitation techniques, bug detection mechanisms, defence technologies.
@@ -58,6 +72,11 @@ __Date:__ 01.07.2020
 
 [__Video__][27]
 
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/v7_mwg5f2cE?start=70" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
 __Participants:__ Elena Reshetova (Intel), Allison Marie Naaktgeboren (PhD Student), Alexander Popov (Positive Technologies), Mimi Zohar (IBM), Kees Cook (Google)
 
 <br/>
@@ -69,6 +88,11 @@ __Conference:__ OffensiveCon 2020
 __Date:__ 15.02.2020
 
 [__Slides__][24] &nbsp; &nbsp; [__Video__][25]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/J6xIohyARSU" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 
 __Description__
 
@@ -83,6 +107,11 @@ __Conference:__ ISPRAS Open Conference 2019
 __Date:__ 06.12.2019
 
 [__Slides__][21] &nbsp; &nbsp; [__Video__][22]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/pt9rlhFMRmc" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 
 __Description__
 
@@ -99,6 +128,11 @@ __Conference:__ Linux Piter 2018
 __Date:__ 03.11.2018
 
 [__Slides__][18] &nbsp; &nbsp; [__Video__][19]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/LeKBVgTE6YY" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 
 __Description__
 
@@ -132,6 +166,11 @@ __Date:__ 27.08.2018
 
 [__Slides__][13] &nbsp; &nbsp; [__Video__][14]
 
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/5wIniiWSgUc" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
 __Description__
 
 STACKLEAK is a Linux kernel security feature initially created by Grsecurity/PaX developers. In May of 2017 Alexander Popov took on the task of introducing STACKLEAK into the Linux kernel mainline. The way to the mainline turned out to be long and complicated.
@@ -145,6 +184,11 @@ __Conference:__ Linux Piter 2017
 __Date:__ 04.11.2017
 
 [__Slides__][10] &nbsp; &nbsp; [__Video__][11]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/oF8K9-8fXMQ" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 
 __Description__
 
@@ -162,6 +206,11 @@ __Conference:__ Still Hacking Anyway (SHA2017)
 __Date:__ 07.08.2017
 
 [__Slides__][7] &nbsp; &nbsp; [__Video__][8]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/g7Qm0NpPAz4" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 
 __Description__
 
@@ -190,7 +239,7 @@ __Conference:__ Positive Hack Days VI
 
 __Date:__ 17.05.2016
 
-[__Slides__][2] &nbsp; &nbsp; [__Video__][3]
+[__Slides__][2] &nbsp; &nbsp;
 
 __Description__
 
@@ -231,7 +280,7 @@ __Description__
 [25]: https://www.youtube.com/watch?v=J6xIohyARSU
 
 [26]: https://lssna2020.sched.com/event/c898
-[27]: https://www.youtube.com/watch?v=v7_mwg5f2cE&list=PLbzoR-pLrL6rph1P4IRTbLweZXE9SnHU6&index=7
+[27]: https://youtu.be/v7_mwg5f2cE?list=PLbzoR-pLrL6rph1P4IRTbLweZXE9SnHU6&t=70
 
 [28]: https://linuxplumbersconf.org/event/7/contributions/775/
 [29]: /img/Alexander_Popov-Following_the_Linux_Kernel_Defence_Map.pdf
