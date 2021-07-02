@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Kconfig hardened check for Linux Kernel"
+title:  "Kconfig hardened check for Linux kernel"
 date:   2018-07-07 13:37:00 +0300
 ---
 
