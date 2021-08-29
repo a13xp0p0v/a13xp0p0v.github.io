@@ -36,7 +36,12 @@ social:
     - https://github.com/a13xp0p0v
     - https://www.linkedin.com/in/a13xp0p0v
 
-logo: /img/ava_bg.jpg
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      image: /img/ava_bg.jpg
 
 # Build settings
 markdown: kramdown
