@@ -290,12 +290,12 @@ __Description__
 
 
 [33]: https://web.archive.org/web/20210308095728/http://zer0con.org/#speaker-section
-[34]: https://a13xp0p0v.github.io/img/CVE-2021-26708.pdf
+[34]: /img/CVE-2021-26708.pdf
 [35]: https://nvd.nist.gov/vuln/detail/CVE-2021-26708
 [36]: https://seclists.org/oss-sec/2021/q1/107
 [37]: https://www.youtube.com/watch?v=EMcjHfceX44
 
-[38]: https://www.phdays.com/ru/program/reports/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel/
-[39]: https://a13xp0p0v.github.io/img/PHDays10_CVE-2021-26708.pdf
+[38]: https://standoff365.com/phdays10/schedule/tech/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel
+[39]: /img/PHDays10_CVE-2021-26708.pdf
 [40]: https://standoff365.com/phdays10/schedule/tech/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel
 
