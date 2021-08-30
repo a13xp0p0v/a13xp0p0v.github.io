@@ -4,6 +4,20 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Improving the Exploit for CVE-2021-26708 in the Linux Kernel to Bypass LKRG][41]
+
+__Conference:__  ZeroNights 2021
+
+__Date:__ 25.08.2021
+
+[__Slides__][42] &nbsp; &nbsp;
+
+__Description__
+
+[CVE-2021-26708][35] is assigned to five race condition bugs in the virtual socket implementation of the Linux kernel. These vulnerabilities were discovered and fixed by Alexander Popov. Earlier, he demonstrated how to exploit them for local privilege escalation on Fedora 33 Server for x86_64. And in this talk, Alexander will describe how he improved this exploit to bypass the Linux Kernel Runtime Guard (LKRG).
+
+<br/>
+
 # [Сила четырех байтов: эксплуатация уязвимости CVE-2021-26708 в ядре Linux][38]
 
 __Conference:__ Positive Hack Days 10
@@ -299,3 +313,5 @@ __Description__
 [39]: /img/PHDays10_CVE-2021-26708.pdf
 [40]: https://standoff365.com/phdays10/schedule/tech/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel
 
+[41]: https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/
+[42]: /img/CVE-2021-26708_LKRG_bypass.pdf
