@@ -10,7 +10,12 @@ __Conference:__  ZeroNights 2021
 
 __Date:__ 25.08.2021
 
-[__Slides__][42] &nbsp; &nbsp;
+[__Slides__][42] &nbsp; &nbsp; [__Video__][43]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/n6YLiYiCIMA" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
 
 __Description__
 
@@ -315,3 +320,4 @@ __Description__
 
 [41]: https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/
 [42]: /img/CVE-2021-26708_LKRG_bypass.pdf
+[43]: https://youtu.be/n6YLiYiCIMA
