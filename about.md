@@ -18,6 +18,6 @@ Some of my open source projects:
 <br />&nbsp; &nbsp;► [kconfig-hardened-check](https://github.com/a13xp0p0v/kconfig-hardened-check) -- a tool for checking the security hardening options of the Linux kernel
 <br />&nbsp; &nbsp;► [kernel-build-containers](https://github.com/a13xp0p0v/kernel-build-containers), which provides containers for building software with many different compilers
 
-You can join the [LinKerSec](https://t.me/linkersec) Telegram channel about Linux kernel security, authored by me and [Andrey Konovalov](https://xairy.io/).
+You can join the [LinKerSec](https://t.me/s/linkersec) Telegram channel about Linux kernel security, authored by me and [Andrey Konovalov](https://xairy.io/).
 
 See my contacts below.
