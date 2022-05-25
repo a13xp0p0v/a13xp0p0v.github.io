@@ -368,7 +368,7 @@ Then I found the `third_party/syzkaller/` subdirectory in the Fuchsia source cod
 
 I tried one more time and updated syzkaller in the `third_party/syzkaller/` subdirectory. But building didn't work because the Fuchsia [`BUILD.gn` file for syzkaller](https://fuchsia.googlesource.com/fuchsia/+/refs/heads/main/src/testing/fuzzing/syzkaller/BUILD.gn) needed a substantial rewriting according to the syzkaller changes.
 
-In short, Fuchsia was integrated with the syzkaller kernel fuzzer once in 2020, but currently this integration is broken. I looked at the Fuchsia version control system to find Fuchsia developers who committed to this functionality. I wrote them an email describing all technical details of this bug, but didn't get a reply.
+In short, maybe Fuchsia integration with syzkaller worked once in 2020, but currently it is broken. I looked at the Fuchsia version control system to find Fuchsia developers who committed to this functionality. I wrote them an email describing all technical details of this bug, but didn't get a reply.
 
 Spending more time on the Fuchsia build system was stressing me out.
 
