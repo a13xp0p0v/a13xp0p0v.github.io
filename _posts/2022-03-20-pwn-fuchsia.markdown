@@ -396,7 +396,7 @@ So I focused on exploiting use-after-free for `TimerDispatcher`. My exploitation
 
 First of all, for overwriting `TimerDispatcher`, I needed to discover a heap spraying exploit primitive that:
  1. Can be used by the attacker from the unprivileged userspace component
- 2. Makes Zircon allocate a new kernel object at the location of the freed object
+ 2. Makes Zircon allocate several new kernel objects, so that one of them is placed at the location of the freed object with high probability
  3. Makes Zircon copy the attacker's data from the userspace to this new kernel object
 
 I knew from my Linux kernel experience that heap spraying is usually constructed using inter-process communication (IPC). Basic IPC syscalls are usually available for unprivileged programs, according to paragraph 1. They copy userspace data to the kernelspace to transfer it to the recipient, according to paragraph 3. And finally, some IPC syscalls set the data size for the transfer, which gives control over the kernel allocator behavior and allows the attacker to overwrite the target freed object, according to paragraph 2.
