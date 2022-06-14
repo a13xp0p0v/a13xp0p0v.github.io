@@ -538,7 +538,7 @@ For Fuchsia, I decided to implement a trick similar to my KASLR bypass for the L
   }
 ```
 
-First, this code creates a Fuchsia channel that will be used for the Fuchsia log protocol. Then it calls `fdio_service_connect()` for `ReadOnlyLog` and attaches the channel transport to it. These functions are from the `fdio` library, which provides a unified interface to a variety of Fuchsia resources: files, sockets, services, and others. Executing this code returns the error:
+This code creates a Fuchsia channel and then uses it for the `ReadOnlyLog` protocol. This code calls the functions from the `fdio` library, which provides a unified interface to a variety of Fuchsia resources: files, sockets, services, and others. Executing the component returns this error:
 
 ```
 [ffx-laboratory:a13x_pwns_fuchsia] WARNING: Failed to route protocol `fuchsia.boot.ReadOnlyLog` with
