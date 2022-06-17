@@ -887,7 +887,7 @@ void process_create_hook(void)
    - Zero `al` indicates that no vector arguments are passed to this function with a variable number of arguments.
    - The `r11` register stores the address of the Zircon `printf()` function, which is called by the `callq *%r11` instruction.
  3. After calling the kernel `printf()`, the clobbered registers are restored.
- 4. Finally, the hooked jumps to the original syscall `zx_process_create()`.
+ 4. Finally, the hook jumps to the original syscall `zx_process_create()`.
 
 
 And now the most interesting part: the rootkit planting. The `pwn()` function copies the code of the hook from the exploit binary into the Zircon kernel code at the address of `assert_fail_msg()`.
