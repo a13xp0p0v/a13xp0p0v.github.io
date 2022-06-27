@@ -680,9 +680,9 @@ Despite this weird pointer arithmetics in Zircon vtables, I decided to craft a f
 
 > In my [Linux Kernel Defence Map](https://github.com/a13xp0p0v/linux-kernel-defence-map), you can see SMAP among various mitigations of control-flow hijacking attacks in the Linux kernel.
 
-I saw multiple ways to bypass `SMAP` protection by placing the fake vtable in the kernelspace.
-  1. For example, Zircon also has `physmap` like the Linux kernel, which makes the idea of the `ret2dir` attack for Zircon very promising.
-  2. Another idea was to use a kernel log infoleak of some kernel address that points to the data controlled by the attacker.
+I saw multiple ways to bypass `SMAP` protection for Zircon:
+  1. Zircon also has `physmap` like the Linux kernel. That makes the idea of the `ret2dir` attack for Zircon very promising.
+  2. Another idea is to place a fake vtable in the kernelspace. The kernel log infoleak can reveal some kernel address that points to the data controlled by the attacker.
 
 But to simplify my first security experiment with Fuchsia, I decided to disable `SMAP` and `SMEP` in the script starting QEMU and create the fake vtable in my exploit in the userspace:
 
