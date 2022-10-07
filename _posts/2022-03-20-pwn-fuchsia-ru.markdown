@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Fuchsia OS глазами атакующего"
+title:  "[ru] Fuchsia OS глазами атакующего"
 date:   2022-06-16 13:37:00 +0300
 ---
 
