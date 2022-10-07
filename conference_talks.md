@@ -4,6 +4,52 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [A Kernel Hacker Meets Fuchsia OS][47]
+
+__Conference:__ Nullcon Goa 2022
+
+__Date:__ 9.09.2022
+
+[__Slides__][48] &nbsp; &nbsp; [__Video__][49]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/TZz-cbPp2uc" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+Fuchsia is a general-purpose open-source operating system created by Google. It is based on the Zircon microkernel written in C++ and is currently under active development. The developers say that Fuchsia is designed with a focus on security, updatability, and performance.
+
+As a Linux kernel hacker, Alexander decided to take a look at Fuchsia OS and assess it from the attacker's point of view. In this talk, he will share his findings.
+
+<br/>
+
+# [Fuchsia OS глазами атакующего][44]
+
+__Conference:__ Positive Hack Days 11
+
+__Date:__ 19.05.2022
+
+[__Slides__][45] &nbsp; &nbsp; [__Video__][46]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/cW928eD8xJU" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+Fuchsia — это операционная система общего назначения с открытым исходным кодом. Она разрабатывается компанией Google. Эта операционная система построена на базе микроядра Zircon, код которого написан на C++. При проектировании Fuchsia главный приоритет был отдан безопасности, обновляемости и быстродействию.
+
+Александр Попов как исследователь безопасности ядра Linux заинтересовался операционной системой Fuchsia и решил посмотреть на нее с точки зрения атакующего. В своем докладе он поделится результатами этой работы.
+
+Вначале будет представлен обзор архитектуры безопасности операционной системы Fuchsia. Затем Александр расскажет о своих экспериментах по эксплуатации уязвимостей для микроядра Zircon и продемонстрирует, как путем повреждения ядерной памяти он внедрил руткит для Fuchsia.
+
+Александр выполнил ответственное разглашение информации о проблемах безопасности, обнаруженных в ходе этого исследования.
+
+<br/>
+
 # [Improving the Exploit for CVE-2021-26708 in the Linux Kernel to Bypass LKRG][41]
 
 __Conference:__  ZeroNights 2021
@@ -321,3 +367,11 @@ __Description__
 [41]: https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/
 [42]: /img/CVE-2021-26708_LKRG_bypass.pdf
 [43]: https://youtu.be/n6YLiYiCIMA
+
+[44]: https://www.phdays.com/ru/program/reports/a-kernel-hacker-meets-fuchsia-os/
+[45]: /img/Alexander_Popov-Fuchsia_pwn-ru.pdf
+[46]: https://www.youtube.com/watch?v=cW928eD8xJU
+
+[47]: https://nullcon.net/goa-2022/kernel-hacker-meets-fuchsia-os
+[48]: /img/Alexander_Popov-Fuchsia_pwn.pdf
+[49]: https://www.youtube.com/watch?v=TZz-cbPp2uc
