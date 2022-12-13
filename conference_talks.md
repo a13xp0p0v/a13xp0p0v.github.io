@@ -4,6 +4,27 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Безопасность ядра Linux: в теории и на практике][50]
+
+__Conference:__ HighLoad++ 2022
+
+__Date:__ 25.11.2022
+
+[__Slides__][51] &nbsp; &nbsp; [__Video__][52]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/Q0iZ6XTuJuM" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+Безопасность ядра Linux — очень сложная предметная область. Она включает большое количество взаимосвязанных понятий: классы уязвимостей, техники их эксплуатации для проведения атак, механизмы выявления ошибок, технологии защиты ядра.
+
+Александр Попов разработал карту средств защиты ядра Linux, которая отражает взаимосвязи между этими понятиями. В докладе он даст обзор текущего состояния безопасности Linux, используя данную карту, и расскажет о своем инструменте kconfig-hardened-check, который помогает управлять ядерными опциями безопасности.
+
+<br/>
+
 # [A Kernel Hacker Meets Fuchsia OS][47]
 
 __Conference:__ Nullcon Goa 2022
@@ -375,3 +396,7 @@ __Description__
 [47]: https://nullcon.net/goa-2022/kernel-hacker-meets-fuchsia-os
 [48]: /img/Alexander_Popov-Fuchsia_pwn.pdf
 [49]: https://www.youtube.com/watch?v=TZz-cbPp2uc
+
+[50]: https://highload.ru/moscow/2022/abstracts/9466
+[51]: /img/Alexander_Popov-Linux_kernel_security_overview.pdf
+[52]: https://www.youtube.com/watch?v=Q0iZ6XTuJuM
