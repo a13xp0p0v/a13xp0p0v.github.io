@@ -22,6 +22,8 @@ email: alex.popov@linux.com
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://a13xp0p0v.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: a13xp0p0v
+mastodon_server: infosec.exchange
+mastodon_username: a13xp0p0v
 github_username:  a13xp0p0v
 telegram_username: a13xp0p0v
 linkedin_username: a13xp0p0v
