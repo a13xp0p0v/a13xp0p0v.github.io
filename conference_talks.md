@@ -111,7 +111,7 @@ __Description__
 
 <br/>
 
-# [Сила четырех байтов: эксплуатация уязвимости CVE-2021-26708 в ядре Linux][38]
+# Сила четырех байтов: эксплуатация уязвимости CVE-2021-26708 в ядре Linux
 
 __Conference:__ Positive Hack Days 10
 
@@ -352,7 +352,7 @@ __Description__
 
 В настоящем докладе будет рассмотрен успешный опыт использования отладочного механизма KASan (Kernel address sanitizer) для автономного гипервизора. Докладчик расскажет, как удалось усилить KASan по сравнению с его реализацией в ядре Linux.
 
-[1]: http://2016.phdays.ru/program/49625/
+[1]: https://web.archive.org/web/20180709090120/http://2016.phdays.ru/program/49625/
 [2]: /img/Alexander_Popov-KASan_in_a_Bare-Metal_Hypervisor-PHDays_VI.pdf
 
 [3]: https://www.youtube.com/watch?v=5db2ULz6ikw
@@ -395,7 +395,6 @@ __Description__
 [31]: https://github.com/a13xp0p0v/linux-kernel-defence-map
 [32]: https://github.com/a13xp0p0v/kconfig-hardened-check
 
-
 [33]: https://web.archive.org/web/20210308095728/http://zer0con.org/#speaker-section
 [34]: /img/CVE-2021-26708.pdf
 [35]: https://nvd.nist.gov/vuln/detail/CVE-2021-26708
@@ -406,15 +405,15 @@ __Description__
 [39]: /img/PHDays10_CVE-2021-26708.pdf
 [40]: https://www.youtube.com/watch?v=h8eL3ysrbcU
 
-[41]: https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/
+[41]: https://web.archive.org/web/20210827082557/https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/
 [42]: /img/CVE-2021-26708_LKRG_bypass.pdf
 [43]: https://youtu.be/jFgn0-9IzK0
 
-[44]: https://www.phdays.com/ru/program/reports/a-kernel-hacker-meets-fuchsia-os/
+[44]: https://web.archive.org/web/20231206082353/https://event.phdays.com/ru#a-kernel-hacker-meets-fuchsia-os
 [45]: /img/Alexander_Popov-Fuchsia_pwn-ru.pdf
 [46]: https://www.youtube.com/watch?v=cW928eD8xJU
 
-[47]: https://nullcon.net/goa-2022/kernel-hacker-meets-fuchsia-os
+[47]: https://web.archive.org/web/20221211203018/https://nullcon.net/goa-2022/kernel-hacker-meets-fuchsia-os
 [48]: /img/Alexander_Popov-Fuchsia_pwn.pdf
 [49]: https://www.youtube.com/watch?v=TZz-cbPp2uc
 
