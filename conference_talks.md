@@ -25,6 +25,25 @@ Attendees can expect a detailed analysis of the fuzzing process, the cases from 
 
 <br/>
 
+# Как обезопасить от санкций ваш открытый проект на GitHub
+
+__Conference:__ Positive Hack Days 12
+
+__Date:__ 20.05.2023
+
+[__Slides__][56] &nbsp; &nbsp; [__Video__][57]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/qT8rE07tGJw" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+На платформе GitHub зарегистрировано более 100 миллионов разработчиков. Это дает выход на огромную аудиторию, и поэтому многие open-source проекты разрабатываются там. С 2018 года компания Microsoft владеет платформой GitHub и в последнее время проводит на ней политику санкций и блокировок. В данном докладе Александр Попов расскажет о комплексе технических мер, которые позволяют снизить возможный ущерб от санкций для вашего открытого GitHub-проекта.
+
+<br/>
+
 # [Безопасность ядра Linux: в теории и на практике][50]
 
 __Conference:__ HighLoad++ 2022
@@ -424,3 +443,6 @@ __Description__
 [53]: https://conference.hitb.org/hitbxphdays/#talk007
 [54]: /img/Alexander_Popov-Reflections_on_Fuzzing.pdf
 [55]: https://www.youtube.com/watch?v=wTbFmdx7wG8
+
+[56]: img/Alexander_Popov-GitHub_Mirroring.pdf
+[57]: https://www.youtube.com/watch?v=qT8rE07tGJw
