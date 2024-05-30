@@ -80,7 +80,7 @@ __Date:__ 25.08.2021
 [__Slides__][42] &nbsp; &nbsp; [__Video__][43]
 
 <div style="position:relative;padding-top:56.25%;">
-  <iframe src="https://www.youtube.com/embed/n6YLiYiCIMA" frameborder="0" allowfullscreen
+  <iframe src="https://www.youtube.com/embed/jFgn0-9IzK0" frameborder="0" allowfullscreen
     style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
 </div><br />
 
@@ -99,7 +99,7 @@ __Date:__ 20.05.2021
 [__Slides__][39] &nbsp; &nbsp; [__Video__][40]
 
 <div style="position:relative;padding-top:56.25%;">
-  <iframe src="https://www.youtube.com/embed/ZB-VYx3578s" frameborder="0" allowfullscreen
+  <iframe src="https://www.youtube.com/embed/h8eL3ysrbcU" frameborder="0" allowfullscreen
     style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
 </div><br />
 
