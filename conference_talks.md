@@ -4,6 +4,27 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [A Bug Hunter’s Reflections on Fuzzing][53]
+
+__Conference:__ HITB x PHDays
+
+__Date:__ 25.05.2024
+
+[__Slides__][54] &nbsp; &nbsp; [__Video__][55]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/wTbFmdx7wG8" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+Fuzzing is an incredibly effective and popular technique for testing software. But not all the bugs that it finds are interesting for bug hunters. Fuzzing for vulnerability discovery is special, and in this talk, Alexander Popov will share his reflections on that topic inspired by his experience in Linux kernel fuzzing.
+
+Attendees can expect a detailed analysis of the fuzzing process, the cases from Alexander’s vulnerability research practice, and insights on how to make fuzzing effective for bug hunting.
+
+<br/>
+
 # [Безопасность ядра Linux: в теории и на практике][50]
 
 __Conference:__ HighLoad++ 2022
@@ -400,3 +421,7 @@ __Description__
 [50]: https://highload.ru/moscow/2022/abstracts/9466
 [51]: /img/Alexander_Popov-Linux_kernel_security_overview.pdf
 [52]: https://www.youtube.com/watch?v=Q0iZ6XTuJuM
+
+[53]: https://conference.hitb.org/hitbxphdays/#talk007
+[54]: /img/Alexander_Popov-Reflections_on_Fuzzing.pdf
+[55]: https://www.youtube.com/watch?v=wTbFmdx7wG8
