@@ -404,11 +404,11 @@ __Description__
 
 [38]: https://standoff365.com/phdays10/schedule/tech/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel
 [39]: /img/PHDays10_CVE-2021-26708.pdf
-[40]: https://standoff365.com/phdays10/schedule/tech/4-bytes-of-power-exploiting-cve-2021-26708-in-the-linux-kernel
+[40]: https://www.youtube.com/watch?v=h8eL3ysrbcU
 
 [41]: https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/
 [42]: /img/CVE-2021-26708_LKRG_bypass.pdf
-[43]: https://youtu.be/n6YLiYiCIMA
+[43]: https://youtu.be/jFgn0-9IzK0
 
 [44]: https://www.phdays.com/ru/program/reports/a-kernel-hacker-meets-fuchsia-os/
 [45]: /img/Alexander_Popov-Fuchsia_pwn-ru.pdf
