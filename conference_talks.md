@@ -12,6 +12,12 @@ __Date:__ 10.04.2025
 
 [__Slides__][64]
 
+<div style="position:relative;padding-top:56.25%;">
+  <a href="img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf">
+    <img src="img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.png"/>
+  </a>
+</div><br />
+
 __Description__
 
 Some memory corruption bugs are much harder to exploit than others. They may involve race conditions, crash the system, and bring various limitations that make the researcher's life hard. Experimenting with such fragile vulnerabilities usually takes a lot of time and effort.
