@@ -13,8 +13,8 @@ __Date:__ 10.04.2025
 [__Slides__][64]
 
 <div style="position:relative;padding-top:56.25%;">
-  <a href="img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf">
-    <img src="img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.png"/>
+  <a href="/img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf">
+    <img src="/img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.png"/>
   </a>
 </div><br />
 
@@ -507,15 +507,15 @@ __Description__
 [54]: /img/Alexander_Popov-Reflections_on_Fuzzing.pdf
 [55]: https://www.youtube.com/watch?v=wTbFmdx7wG8
 
-[56]: img/Alexander_Popov-GitHub_Mirroring.pdf
+[56]: /img/Alexander_Popov-GitHub_Mirroring.pdf
 [57]: https://www.youtube.com/watch?v=qT8rE07tGJw
 
 [58]: https://techleadconf.ru/moscow/2024/abstracts/13662
-[59]: img/techlead24.pdf
+[59]: /img/techlead24.pdf
 [60]: https://www.youtube.com/watch?v=9qwm8aLmuOE
 
 [61]: https://www.h2hc.com.br/en/
-[62]: img/Alexander_Popov-H2HC-2024.pdf
+[62]: /img/Alexander_Popov-H2HC-2024.pdf
 
 [63]: https://zer0con.org/
-[64]: img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf
+[64]: /img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf
