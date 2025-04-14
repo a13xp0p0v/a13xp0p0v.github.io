@@ -4,6 +4,22 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Diving into Linux kernel security][61]
+
+__Conference:__ Hackers to Hackers Conference (H2HC)
+
+__Date:__ 14.12.2024
+
+[__Slides__][62]
+
+__Description__
+
+ Linux kernel security is a deep and complex topic. It contains many concepts, including vulnerability classes, exploitation techniques, bug detection mechanisms, and defense technologies, which have complicated relations with each other. Moreover, the Linux kernel provides hundreds of parameters that allow configuring operating system security at compile, boot, and run times.
+
+  In this talk, Alexander Popov will describe how to learn this complex area and knowingly configure the security hardening of your Linux-based system. He will show the open-source tools for that purpose, which he has been developing in his spare time since 2018. Alexander will present the ideas for future features and invite the audience to join the community around these free software projects.
+
+<br/>
+
 # [Раскручиваем маховик: как развивать открытую разработку в коммерческой компании][58]
 
 __Conference:__ TechLeadConf
@@ -473,3 +489,6 @@ __Description__
 [58]: https://techleadconf.ru/moscow/2024/abstracts/13662
 [59]: img/techlead24.pdf
 [60]: https://www.youtube.com/watch?v=9qwm8aLmuOE
+
+[61]: https://www.h2hc.com.br/en/
+[62]: img/Alexander_Popov-H2HC-2024.pdf
