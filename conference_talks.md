@@ -4,9 +4,27 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Kernel-Hack-Drill: Environment For Developing Linux Kernel Exploits][63]
+
+__Conference:__ Zer0Con 2025
+
+__Date:__ 10.04.2025
+
+[__Slides__][64]
+
+__Description__
+
+Some memory corruption bugs are much harder to exploit than others. They may involve race conditions, crash the system, and bring various limitations that make the researcher's life hard. Experimenting with such fragile vulnerabilities usually takes a lot of time and effort.
+
+The kernel-hack-drill project helps to develop PoC exploits for such hard bugs in the Linux kernel. It provides a test environment for constructing specific exploit primitives that you need for your research: <https://github.com/a13xp0p0v/kernel-hack-drill>
+
+In this talk, Alexander Popov will present kernel-hack-drill and show how this project helped in experiments with CVE-2024-50264, a complicated race condition in the Linux kernel.
+
+<br/>
+
 # [Diving into Linux kernel security][61]
 
-__Conference:__ Hackers to Hackers Conference (H2HC)
+__Conference:__ Hackers to Hackers Conference (H2HC) 2024
 
 __Date:__ 14.12.2024
 
@@ -22,7 +40,7 @@ __Description__
 
 # [Раскручиваем маховик: как развивать открытую разработку в коммерческой компании][58]
 
-__Conference:__ TechLeadConf
+__Conference:__ TechLeadConf 2024
 
 __Date:__ 27.11.2024
 
@@ -492,3 +510,6 @@ __Description__
 
 [61]: https://www.h2hc.com.br/en/
 [62]: img/Alexander_Popov-H2HC-2024.pdf
+
+[63]: https://zer0con.org/
+[64]: img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf
