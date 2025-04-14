@@ -12,11 +12,9 @@ __Date:__ 10.04.2025
 
 [__Slides__][64]
 
-<div style="position:relative;padding-top:56.25%;">
-  <a href="/img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf">
-    <img src="/img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.png"/>
-  </a>
-</div><br />
+<a href="/img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf">
+  <img src="/img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.png"/>
+</a><br />
 
 __Description__
 
