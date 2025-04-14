@@ -34,6 +34,10 @@ __Date:__ 14.12.2024
 
 [__Slides__][62]
 
+<a href="/img/Alexander_Popov-H2HC-2024.pdf">
+  <img src="/img/Alexander_Popov-H2HC-2024.png"/>
+</a><br />
+
 __Description__
 
  Linux kernel security is a deep and complex topic. It contains many concepts, including vulnerability classes, exploitation techniques, bug detection mechanisms, and defense technologies, which have complicated relations with each other. Moreover, the Linux kernel provides hundreds of parameters that allow configuring operating system security at compile, boot, and run times.
@@ -337,6 +341,10 @@ __Date:__ 22.10.2018
 
 [__Slides__][16]
 
+<a href="/img/Alexander_Popov-KSPP_lessons.pdf">
+  <img src="/img/Alexander_Popov-KSPP_lessons.png"/>
+</a><br />
+
 __Description__
 
 Security is not an easy topic for the Linux kernel community. Upstreaming security features usually provokes hot discussions in the Linux Kernel Mailing List and in social networks. Grsecurity/PaX, Kernel Self Protection Project (KSPP), kernel maintainers and Linus all have different opinions.
@@ -412,6 +420,10 @@ __Conference:__ LinuxCon Japan 2016
 __Date:__ 13.07.2016
 
 [__Slides__][5]
+
+<a href="/img/Alexander_Popov-KASan_in_a_Bare-Metal_Hypervisor.pdf">
+  <img src="/img/Alexander_Popov-KASan_in_a_Bare-Metal_Hypervisor.png"/>
+</a><br />
 
 __Description__
 
