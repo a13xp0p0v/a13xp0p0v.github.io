@@ -455,7 +455,7 @@ __Description__
 [7]: /img/Alexander_Popov-Race_for_Root_SHA2017.pdf
 [8]: https://media.ccc.de/v/SHA2017-295-race_for_root_the_analysis_of_the_linux_kernel_race_condition_exploit
 
-[9]: https://ostconf.com/en/events/9745/materials/2344
+[9]: https://web.archive.org/web/20211119212012/https://ostconf.com/en/events/9745/materials/2344
 [10]: /img/Alexander_Popov-stackleak-LinuxPiter2017.pdf
 [11]: https://www.youtube.com/watch?v=oF8K9-8fXMQ
 
@@ -466,7 +466,7 @@ __Description__
 [15]: https://osseu18.sched.com/event/FxY1/between-the-millstones-lessons-of-self-funded-participation-in-kernel-self-protection-project-alexander-popov-positive-technologies
 [16]: /img/Alexander_Popov-KSPP_lessons.pdf
 
-[17]: https://ostconf.com/ru/materials/2491
+[17]: https://web.archive.org/web/20221211203019/https://ostconf.com/ru/materials/2491
 [18]: /img/Alexander_Popov-KSPP_lessons-Linux_Piter_2018.pdf
 [19]: https://www.youtube.com/watch?v=LeKBVgTE6YY
 
@@ -524,8 +524,8 @@ __Description__
 [59]: /img/techlead24.pdf
 [60]: https://www.youtube.com/watch?v=9qwm8aLmuOE
 
-[61]: https://www.h2hc.com.br/en/
+[61]: https://web.archive.org/web/20250121071456/https://www.h2hc.com.br/en/articles/speaker.html#speaker1
 [62]: /img/Alexander_Popov-H2HC-2024.pdf
 
-[63]: https://zer0con.org/
+[63]: https://web.archive.org/web/20250326025309/https://zer0con.org/#speaker-section
 [64]: /img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf
