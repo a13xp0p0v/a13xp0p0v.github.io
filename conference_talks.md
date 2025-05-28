@@ -4,6 +4,50 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Kernel-hack-drill: система разработки эксплойтов для ядра Linux][67]
+
+__Conference:__ PHDays Fest 2025
+
+__Date:__ 22.05.2025
+
+[__Slides__][68] &nbsp; &nbsp; [__Video__][69]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/NUPgmFVvBZk" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+Некоторые ошибки повреждения памяти крайне сложно эксплуатировать, особенно если уязвимость связана с состоянием гонки, не дает полноценного контроля над данными или приводит к нежелательным отказам системы.
+
+Набор инструментов kernel-hack-drill облегчает жизнь исследователя и помогает разрабатывать прототипы эксплойтов для особенно сложных уязвимостей в ядре Linux.
+
+В своем выступлении Александр Попов представит открытый проект kernel-hack-drill и расскажет, как с помощью него провел эксперименты с уязвимостью CVE-2024-50264 в ядре Linux.
+
+<br/>
+
+# [Панельная дискуссия. Разработка открытого кода в России сегодня и завтра][65]
+
+__Conference:__ PHDays Fest 2025
+
+__Date:__ 23.05.2025
+
+[__Video__][66]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/-xPoZsY5TpU" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+Разработка ПО с открытым исходным кодом дает большие возможности для создания новых технологий и сообществ вокруг них. Однако для достижения успеха в open source требуются особые подходы, учитывающие дополнительные риски и сложности. В панельной дискуссии лидеры отрасли обсудят перспективы и вызовы открытой разработки в России.
+
+Ведущий: Александр Попов (Positive Technologies). Спикеры: Сергей Бережной (Яндекс), Иван Панченко (Postgres Professional), Никита Соболев.
+
+<br/>
+
 # [Kernel-Hack-Drill: Environment For Developing Linux Kernel Exploits][63]
 
 __Conference:__ Zer0Con 2025
@@ -529,3 +573,10 @@ __Description__
 
 [63]: https://web.archive.org/web/20250326025309/https://zer0con.org/#speaker-section
 [64]: /img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf
+
+[65]: https://phdays.com/ru/forum/program/?date=2025%2F5%2F23&talk-id=1870
+[66]: https://www.youtube.com/watch?v=-xPoZsY5TpU
+
+[67]: https://phdays.com/ru/forum/program/?date=2025%2F5%2F22&talk-id=1724
+[68]: /img/Alexander_Popov-Kernel_Hack_Drill-PHDays.pdf
+[69]: https://www.youtube.com/watch?v=NUPgmFVvBZk
