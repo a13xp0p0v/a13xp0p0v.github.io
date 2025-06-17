@@ -13,7 +13,7 @@ __Date:__ 22.05.2025
 [__Slides__][68] &nbsp; &nbsp; [__Video__][69]
 
 <div style="position:relative;padding-top:56.25%;">
-  <iframe src="https://www.youtube.com/embed/NUPgmFVvBZk" frameborder="0" allowfullscreen
+  <iframe src="https://www.youtube.com/embed/fWP17mArkZU" frameborder="0" allowfullscreen
     style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
 </div><br />
 
@@ -579,4 +579,4 @@ __Description__
 
 [67]: https://phdays.com/ru/forum/program/?date=2025%2F5%2F22&talk-id=1724
 [68]: /img/Alexander_Popov-Kernel_Hack_Drill-PHDays.pdf
-[69]: https://www.youtube.com/watch?v=NUPgmFVvBZk
+[69]: https://www.youtube.com/watch?v=fWP17mArkZU

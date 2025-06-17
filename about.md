@@ -15,7 +15,7 @@ Some of my open source projects:
   <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;• Exploitation techniques,
   <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;• Bug detection mechanisms,
   <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;• Defence technologies.
-<br />&nbsp; &nbsp;► [kconfig-hardened-check](https://github.com/a13xp0p0v/kconfig-hardened-check) -- a tool for checking the security hardening options of the Linux kernel.
+<br />&nbsp; &nbsp;► [kernel-hardening-checker](https://github.com/a13xp0p0v/kernel-hardening-checker) -- a tool for checking the security hardening options of the Linux kernel.
 <br />&nbsp; &nbsp;► [kernel-hack-drill](https://github.com/a13xp0p0v/kernel-hack-drill) -- a playground for the experiments with Linux kernel exploits.
 <br />&nbsp; &nbsp;► [kernel-build-containers](https://github.com/a13xp0p0v/kernel-build-containers) -- a project providing containers for building software with different compilers for various architectures.
 
