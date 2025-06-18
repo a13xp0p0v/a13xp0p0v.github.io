@@ -8,7 +8,7 @@ date:   2021-10-25 13:37:00 +0300
 
 Летом я [выступил с докладом](https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/) по этой теме на конференции ZeroNights 2021 ([слайды](https://a13xp0p0v.github.io/img/CVE-2021-26708_LKRG_bypass.pdf)):
 <div style="position:relative;padding-top:56.25%;">
-  <iframe src="https://www.youtube.com/embed/n6YLiYiCIMA" frameborder="0" allowfullscreen
+  <iframe src="https://www.youtube.com/embed/jFgn0-9IzK0" frameborder="0" allowfullscreen
     style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
 </div>
 <br/>
