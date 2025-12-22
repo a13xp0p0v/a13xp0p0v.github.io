@@ -530,7 +530,7 @@ In this article, I described how I improved my PoC exploit for [CVE-2021-26708][
 I believe writing this article is useful for the Linux kernel community, since it shows practical aspects of kernel vulnerability exploitation and defense. I hope you enjoyed it.
 
 [0]: https://nvd.nist.gov/vuln/detail/CVE-2021-26708
-[1]: https://a13xp0p0v.github.io/2021/02/09/CVE-2021-26708.html
+[1]: https://a13xp0p0v.tech/2021/02/09/CVE-2021-26708.html
 [2]: https://github.com/openwall/lkrg
 [3]: https://zeronights.ru/en/reports-en/improving-the-exploit-for-cve-2021-26708-in-the-linux-kernel-to-bypass-lkrg/
 [4]: https://youtu.be/O6rsuGVXkmE

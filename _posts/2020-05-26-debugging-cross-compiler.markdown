@@ -263,7 +263,7 @@ Ha-ha! It was fixing another warning during Linux kernel compilation back in 201
 
 In Russia we have an idiom `"близок локоток, да не укусишь"` that can be translated like `"your elbow is near, but you can't bite it, dear"`. That debugging was painful, thanks God, I managed to make this "bite". Writing this article helped me to relax. Hope you enjoyed reading!
 
-[0]: https://a13xp0p0v.github.io/2018/11/04/stackleak.html
+[0]: https://a13xp0p0v.tech/2018/11/04/stackleak.html
 [1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=10e9ae9fabaf96c8e5227c1cd4827d58b3aa406d
 [2]: https://grsecurity.net/an_ancient_kernel_hole_is_not_closed
 [3]: https://www.kernel.org/doc/html/latest/process/changes.html

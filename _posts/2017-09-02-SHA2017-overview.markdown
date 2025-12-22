@@ -102,4 +102,4 @@ The recording:
 
 [1]: https://sha2017.org/
 [2]: https://program.sha2017.org/system/event_attachments/attachments/000/000/111/original/a13xp0p0v_race_for_root_SHA2017.pdf
-[3]: https://a13xp0p0v.github.io/2017/09/27/naive-double-free-detection.html
+[3]: https://a13xp0p0v.tech/2017/09/27/naive-double-free-detection.html

@@ -513,7 +513,7 @@ Control-flow hijacking requires knowledge of kernel symbol addresses, which depe
   }
 ```
 
-For Fuchsia, I decided to implement a trick similar to my KASLR bypass for the Linux kernel. My [PoC exploit for CVE-2021-26708](https://a13xp0p0v.github.io/2021/02/09/CVE-2021-26708.html) used the Linux kernel log for reading kernel pointers to mount the attack. The Fuchsia kernel log contains security-sensitive information as well. So I tried to read the Zircon log from my unprivileged userspace component. I added `use: [ { protocol: "fuchsia.boot.ReadOnlyLog" } ]` to the component manifest and opened the log with this code:
+For Fuchsia, I decided to implement a trick similar to my KASLR bypass for the Linux kernel. My [PoC exploit for CVE-2021-26708](https://a13xp0p0v.tech/2021/02/09/CVE-2021-26708.html) used the Linux kernel log for reading kernel pointers to mount the attack. The Fuchsia kernel log contains security-sensitive information as well. So I tried to read the Zircon log from my unprivileged userspace component. I added `use: [ { protocol: "fuchsia.boot.ReadOnlyLog" } ]` to the component manifest and opened the log with this code:
 
 ```c++
   zx::channel local, remote;

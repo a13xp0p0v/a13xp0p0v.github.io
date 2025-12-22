@@ -393,9 +393,9 @@ days ago before going to sleep:
 
 [1]: https://seclists.org/oss-sec/2016/q4/607
 [2]: https://www.openwall.com/lists/oss-security/2017/02/26/2
-[3]: https://a13xp0p0v.github.io/2017/03/24/CVE-2017-2636.html
+[3]: https://a13xp0p0v.tech/2017/03/24/CVE-2017-2636.html
 [4]: https://ssd-disclosure.com/ssd-advisory-linux-kernel-af_packet-use-after-free/
-[5]: https://a13xp0p0v.github.io/2020/02/15/CVE-2019-18683.html
+[5]: https://a13xp0p0v.tech/2020/02/15/CVE-2019-18683.html
 [6]: https://www.kernel.org/doc/html/latest/dev-tools/kasan.html
 [7]: https://www.openwall.com/lists/kernel-hardening/2020/08/13/7
 [8]: https://www.openwall.com/lists/kernel-hardening/2020/09/29/7
