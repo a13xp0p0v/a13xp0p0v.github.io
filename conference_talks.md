@@ -606,5 +606,5 @@ __Description__
 
 [70]: https://phtalks.ptsecurity.com/
 [71]: /img/Alexander_Popov-Kernel_Hack_Drill_Masterclass.pdf
-[71]: https://www.youtube.com/watch?v=zXVqGaJY6iM
-[72]: https://github.com/a13xp0p0v/kernel-hack-drill
+[72]: https://www.youtube.com/watch?v=zXVqGaJY6iM
+[73]: https://github.com/a13xp0p0v/kernel-hack-drill
