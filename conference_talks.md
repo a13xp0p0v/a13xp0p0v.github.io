@@ -4,6 +4,29 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# [Kernel-Hack-Drill Masterclass][70]
+
+__Conference:__ Positive Hack Talks Kuala Lumpur
+
+__Date:__ 05.05.2026
+
+[__Slides__][71] &nbsp; &nbsp; [__Video__][72]
+
+<div style="position:relative;padding-top:56.25%;">
+  <iframe src="https://www.youtube.com/embed/zXVqGaJY6iM" frameborder="0" allowfullscreen
+    style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+</div><br />
+
+__Description__
+
+In this talk, Alexander Popov will present his personal open-source project [kernel-hack-drill][73], which provides a testing environment for learning and experimenting with Linux kernel vulnerabilities, exploit primitives, and kernel hardening features.
+
+kernel-hack-drill contains a small Linux kernel module that provides a simple interface to userspace and contains vulnerabilities that you can control and experiment with. Furthermore, this project includes a set of proof-of-concept (PoC) exploits for these artificial vulnerabilities.
+
+Alexander will show live demos with kernel-hack-drill that will be valuable for Linux kernel developers and researchers interested in kernel vulnerabilities and self-protection mechanisms.
+
+<br/>
+
 # [Kernel-hack-drill: система разработки эксплойтов для ядра Linux][67]
 
 __Conference:__ PHDays Fest 2025
@@ -580,3 +603,8 @@ __Description__
 [67]: https://phdays.com/ru/forum/program/?date=2025%2F5%2F22&talk-id=1724
 [68]: /img/Alexander_Popov-Kernel_Hack_Drill-PHDays.pdf
 [69]: https://www.youtube.com/watch?v=fWP17mArkZU
+
+[70]: https://phtalks.ptsecurity.com/
+[71]: /img/Alexander_Popov-Kernel_Hack_Drill_Masterclass.pdf
+[71]: https://www.youtube.com/watch?v=zXVqGaJY6iM
+[72]: https://github.com/a13xp0p0v/kernel-hack-drill
