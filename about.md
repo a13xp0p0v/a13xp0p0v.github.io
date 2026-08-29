@@ -9,7 +9,7 @@ My name is __Alexander Popov__, and this is my personal blog about OS kernel dev
 I'm a Linux kernel developer since 2012. I'm focused on kernel security.
 <br />Here are [my contributions](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=author&q=Alexander+Popov) to the mainline kernel and [my conference talks](https://a13xp0p0v.tech/conference_talks/).
 
-Some of my open source projects:
+Some of my open-source projects:
 <br />&nbsp; &nbsp;► [Linux Kernel Defence Map](https://github.com/a13xp0p0v/linux-kernel-defence-map), which shows the relationships between:
   <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;• Vulnerability classes,
   <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;• Exploitation techniques,
