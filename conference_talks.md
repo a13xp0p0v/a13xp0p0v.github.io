@@ -27,7 +27,7 @@ Alexander will show live demos with kernel-hack-drill that will be valuable for 
 
 <br/>
 
-# [Kernel-hack-drill: система разработки эксплойтов для ядра Linux][67]
+# Kernel-hack-drill: система разработки эксплойтов для ядра Linux
 
 __Conference:__ PHDays Fest 2025
 
@@ -50,7 +50,7 @@ __Description__
 
 <br/>
 
-# [Панельная дискуссия. Разработка открытого кода в России сегодня и завтра][65]
+# Панельная дискуссия. Разработка открытого кода в России сегодня и завтра
 
 __Conference:__ PHDays Fest 2025
 
@@ -597,14 +597,12 @@ __Description__
 [63]: https://web.archive.org/web/20250326025309/https://zer0con.org/#speaker-section
 [64]: /img/Alexander_Popov-Kernel_Hack_Drill-Zer0Con.pdf
 
-[65]: https://phdays.com/ru/forum/program/?date=2025%2F5%2F23&talk-id=1870
 [66]: https://www.youtube.com/watch?v=-xPoZsY5TpU
 
-[67]: https://phdays.com/ru/forum/program/?date=2025%2F5%2F22&talk-id=1724
 [68]: /img/Alexander_Popov-Kernel_Hack_Drill-PHDays.pdf
 [69]: https://www.youtube.com/watch?v=fWP17mArkZU
 
-[70]: https://phtalks.ptsecurity.com/
+[70]: https://web.archive.org/web/20260810055423/https://phtalks.ptsecurity.com/
 [71]: /img/Alexander_Popov-Kernel_Hack_Drill_Masterclass.pdf
 [72]: https://www.youtube.com/watch?v=zXVqGaJY6iM
 [73]: https://github.com/a13xp0p0v/kernel-hack-drill
