@@ -4,6 +4,34 @@ title: "Conference Talks"
 permalink: /conference_talks/
 ---
 
+# Dangerous Device: Exploiting CVE-2026-31695 in the Linux Kernel via Struct Device
+
+__Conference:__ Security Analyst Summit 2026
+
+__Date:__ 21.10.2026
+
+[__Slides__][75]
+
+__Description__
+
+In the spring of 2026, Alexander Popov discovered and fixed an interesting Linux kernel vulnerability CVE-2026-31695 that was caused by a logical bug in the network device management. This vulnerability had been present in the kernel code for nearly 5 years. In this talk, Alexander will describe the exploit for this vulnerability providing local privilege escalation (LPE) on Fedora 44 Server for the x86_64 architecture. The researcher will demonstrate how he bypassed the security hardening mechanisms and gained full control over the operating system by spoofing a struct device. Moreover, Alexander will explain how he managed to make the attack absolutely stable, despite the elusive race condition during the exploitation of CVE-2026-31695.
+
+<br/>
+
+# Опасное устройство: эксплуатация уязвимости CVE-2026−31 695 в ядре Linux с помощью struct device
+
+__Conference:__ ZeroNights 2026
+
+__Date:__ 30.09.2026
+
+[__Slides__][74]
+
+__Description__
+
+Весной 2026 года Александр Попов обнаружил и устранил необычную уязвимость в ядре Linux, которая была вызвана логической ошибкой в управлении сетевыми устройствами и присутствовала в коде ядра почти 5 лет. Ей был присвоен идентификатор CVE-2026-31695. В своем докладе Александр детально расскажет об эксплуатации этой уязвимости с целью локального повышения привилегий на Fedora 44 Server для архитектуры x86_64. Исследователь продемонстрирует, как он обошел средства защиты платформы и получил полный контроль над ОС с помощью подделки struct device. Кроме того, Александр покажет, как ему удалось сделать атаку абсолютно стабильной, несмотря на труднодостижимое состояние гонки при эксплуатации CVE-2026-31695.
+
+<br/>
+
 # [Kernel-Hack-Drill Masterclass][70]
 
 __Conference:__ Positive Hack Talks Kuala Lumpur
@@ -606,3 +634,7 @@ __Description__
 [71]: /img/Alexander_Popov-Kernel_Hack_Drill_Masterclass.pdf
 [72]: https://www.youtube.com/watch?v=zXVqGaJY6iM
 [73]: https://github.com/a13xp0p0v/kernel-hack-drill
+
+[74]: /img/Alexander_Popov-Dangerous_Device-RU.pdf
+
+[75]: /img/Alexander_Popov-Dangerous_Device.pdf
